@@ -11,10 +11,52 @@ router.get('/', (req, res, next) => {
   })
     .then(users => res.json(users))
     .catch(next)
-})
+});
 
 router.get('/:userId', (req, res, next) => {
   User.findById(req.params.userId, { attributes: ['id', 'email', 'name', 'address']})
     .then(user => res.json(user))
     .catch(next)
+});
+
+router.post('/', (req, res, next) => {
+  User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    address: req.body.address,
+    cc: req.body.cc,
+    isAdmin: req.body.isAdmin
+  })
+  .then(newUser => {
+    res.json(newUser)
+  })
+  .catch(next)
+});
+
+router.put('/:userId', (req, res, next) => {
+  User.findById(req.params.userId)
+  .then(user => {
+    user.update({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      address: req.body.address,
+      cc: req.body.cc,
+      isAdmin: req.body.isAdmin
+    })
+    .then(updatedUser => {
+      res.json(updatedUser)
+    })
+  })
+  .catch(next)
+});
+
+router.delete('/:userId', (req, res, next) => {
+  const id = req.params.userId;
+  User.destroy({ where: { id }})
+    .then(() => {
+      res.json('user deleted')
+    })
+  .catch(next)
 });
