@@ -6,7 +6,22 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate:{
+      isEmail: true
+    }
+  },
+  name:{
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  address:{
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  cc:{
+    type: Sequelize.NUMBER,
+    allowNull: true
   },
   password: {
     type: Sequelize.STRING
@@ -16,6 +31,9 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  isAdmin:{
+    type: Sequelize.BOOLEAN
   }
 })
 
