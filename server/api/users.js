@@ -8,7 +8,10 @@ router.get('/', (req, res, next) => {
     // explicitly select only the id and email fields - even though
     // users' passwords are encrypted, it won't help if we just
     // send everything to anyone who asks!
-    attributes: ['id', 'email', 'name', 'address', 'cc']
+    attributes: {
+      include: ['id', 'email', 'name', 'address'],
+      exclude: ['cc', 'password', 'salt', 'googleId']
+    }
   })
     .then(users => res.json(users))
     .catch(next)
@@ -17,7 +20,12 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id/orders', (req, res, next) => {
   if (req.user && (req.user.id === +req.params.id || req.user.isAdmin)) {
-    User.findById(+req.params.id, { include: [{ all: true, nested: true }] })
+    User.findById(+req.params.id, {
+      attributes: {
+        include: [{ all: true, nested: true }],
+        // exclude: ['password', 'salt', 'googleId'] do we need this here?
+      }
+    })
       .then(user => {
         res.json(user)
       })
@@ -29,8 +37,14 @@ router.get('/:id/orders', (req, res, next) => {
 
 
 router.get('/:id', (req, res, next) => {
+  // admin validation is temporarily disabled for testing
+
+  // if (req.user && (req.user.id === +req.params.id || req.user.isAdmin)) {
   User.findById(req.params.id, {
-    attributes: ['id', 'email', 'name', 'address', 'cc']
+    attributes: {
+      include: ['id', 'email', 'name', 'address'],
+      exclude: ['password', 'salt', 'googleId']
+    }
   })
     .then(user => {
       if (user) {
@@ -40,6 +54,9 @@ router.get('/:id', (req, res, next) => {
       }
     })
     .catch(next);
+  // } else {
+  //   res.json('Access denied!')
+  // }
 });
 
 
@@ -51,10 +68,14 @@ router.post('/', (req, res, next) => {
 
 
 router.put('/:id', (req, res, next) => {
-  User.findById(req.params.id)
-    .then(user => user.update(req.body))
-    .then(user => res.json(user))
-    .catch(next);
+  if (req.user && (req.user.id === +req.params.id || req.user.isAdmin)) {
+    User.findById(req.params.id)
+      .then(user => user.update(req.body))
+      .then(user => res.json(user))
+      .catch(next);
+  } else {
+    res.json('Access denied!')
+  }
 });
 
 
