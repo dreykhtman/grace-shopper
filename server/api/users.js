@@ -2,6 +2,7 @@ const router = require('express').Router()
 const { User } = require('../db/models')
 module.exports = router
 
+
 router.get('/', (req, res, next) => {
   User.findAll({
     // explicitly select only the id and email fields - even though
@@ -13,14 +14,11 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-// get user by id
+
 router.get('/:id', (req, res, next) => {
   let id = req.params.id;
 
-  User.findOne({
-    where: {
-      id
-    },
+  User.findById(id, {
     attributes: ['id', 'email', 'name', 'address', 'cc']
   })
     .then(user => res.json(user))
@@ -34,14 +32,16 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-// update user
+
 router.put('/:id', (req, res, next) => {
   let id = req.params.id;
+
   User.findById(id)
     .then(user => user.update(req.body))
     .then(user => res.json(user))
     .catch(next);
 });
+
 
 router.delete('/:id', (req, res, next) => {
   let id = req.params.id;
@@ -50,3 +50,5 @@ router.delete('/:id', (req, res, next) => {
     .then(() => res.status(204).end())
     .catch(next);
 });
+
+// if(req.user && (req.quser.id = req.params.id || req.user.isAdmin))
