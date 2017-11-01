@@ -11,8 +11,6 @@ describe('User routes', () => {
     return db.sync({ force: true })
   })
 
-
-
   describe('/api/users/', () => {
 
     const codysEmail = 'cody@puppybook.com'
@@ -36,6 +34,8 @@ describe('User routes', () => {
         .then(res => {
           expect(res.body).to.be.an('array')
           expect(res.body[0].email).to.be.equal(codysEmail)
+          expect(res.body[0].address).to.be.equal(codysAddress)
+          expect(res.body[0].password).to.be.equal(undefined)
         })
     })
   }) // end describe('/api/users')
@@ -61,7 +61,9 @@ describe('User routes', () => {
         .get('/api/users/1')
         .expect(200)
         .then(res => {
-          expect(res.body.cc).to.be.equal(codysCC)
+          expect(res.body.address).to.be.equal(codysAddress)
+          expect(res.body.password).to.be.equal(undefined)
+          expect(res.body.salt).to.be.equal(undefined)
         })
     })
 
