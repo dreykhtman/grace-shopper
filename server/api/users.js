@@ -61,15 +61,6 @@ router.delete('/:userId', (req, res, next) => {
   .catch(next)
 });
 
-// why doesn't this work
-
-// router.get('/:id/orders', (req, res, next) => {
-//   Order.findAll({ where: { userId: Number(req.params.id) }}, { include: [{ all: true, nested: true }]})
-//   .then(orders => {
-//       res.json(orders)
-//   })
-// });
-
 router.get('/:id/orders', (req, res, next) => {
   User.findById(+req.params.id, {include: [{ all: true, nested: true }]})
   .then(user => {
@@ -78,9 +69,40 @@ router.get('/:id/orders', (req, res, next) => {
   .catch(next)
 });
 
+// get user by id
+router.get('/:id', (req, res, next) => {
+  let id = req.params.id;
+
+  User.findOne({
+    where: {
+      id
+    },
+    attributes: ['id', 'email', 'name', 'address', 'cc']
+  })
+    .then(user => res.json(user))
+    .catch(next);
+});
 
 
+router.post('/', (req, res, next) => {
+  User.create(req.body)
+    .then(user => res.status(201).json(user))
+    .catch(next);
+});
 
+// update user
+router.put('/:id', (req, res, next) => {
+  let id = req.params.id;
+  User.findById(id)
+    .then(user => user.update(req.body))
+    .then(user => res.json(user))
+    .catch(next);
+});
 
+router.delete('/:id', (req, res, next) => {
+  let id = req.params.id;
 
-//User --> search orders
+  User.destroy({ where: { id } })
+    .then(() => res.status(204).end())
+    .catch(next);
+});
