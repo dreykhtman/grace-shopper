@@ -1,7 +1,8 @@
-
+const Sequelize = require('sequelize');
 const User = require('./user');
 const Review = require('./review');
 const Product = require('./product');
+const Order = require('./order');
 const db = require('../db.js')
 
 /**
@@ -18,15 +19,25 @@ const db = require('../db.js')
  * instead of: const User = require('../db/models/user')
  */
 
- Review.belongsTo(User);
- Review.belongsTo(Product);
+Review.belongsTo(User);
+Review.belongsTo(Product);
 
- User.hasMany(Review);
- Product.hasMany(Review);
+User.hasMany(Review);
+Product.hasMany(Review);
+
+Order.belongsTo(User);
+User.hasMany(Order);
+
+const ProductsInOrder = db.define('products_in_order', {
+  quantity: Sequelize.INTEGER
+});
+
+Order.belongsToMany(Product, { through: ProductsInOrder });
 
 module.exports = {
   User,
   Product,
   Review,
+  Order,
   db
 }
