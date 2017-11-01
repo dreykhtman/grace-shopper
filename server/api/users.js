@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const { User, Order, Product } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -60,3 +60,27 @@ router.delete('/:userId', (req, res, next) => {
     })
   .catch(next)
 });
+
+// why doesn't this work
+
+// router.get('/:id/orders', (req, res, next) => {
+//   Order.findAll({ where: { userId: Number(req.params.id) }}, { include: [{ all: true, nested: true }]})
+//   .then(orders => {
+//       res.json(orders)
+//   })
+// });
+
+router.get('/:id/orders', (req, res, next) => {
+  User.findById(+req.params.id, {include: [{ all: true, nested: true }]})
+  .then(user => {
+    res.json(user)
+  })
+  .catch(next)
+});
+
+
+
+
+
+
+//User --> search orders

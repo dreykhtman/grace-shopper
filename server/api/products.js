@@ -10,7 +10,7 @@ router.param('productId', (req, res, next, id) => {
   })
   .then(product => {
     req.product = product
-    console.log('found a product! req.product:', req.product)
+    //console.log('found a product! req.product:', req.product)
     next();
   })
   .catch(err => console.error(err))
@@ -22,7 +22,8 @@ router.get('/:productId/reviews', (req, res, next) => {
   // })
   //   .then(products => res.json(products))
   //   .catch(next)
-  res.json(req.product.review)
+  console.log(req.product)
+  res.json(req.product.reviews)
 })
 
 router.route('/:productId')
