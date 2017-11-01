@@ -15,6 +15,43 @@ router.param('productId', (req, res, next, id) => {
   .catch(err => console.error(err))
 })
 
+//.all before requests will find by id and attach to the req
+router.route('/:productId/reviews/:reviewId')
+.all((req, res, next) => {
+  Review.findById(+req.params.reviewId)
+  .then(review => {
+    req.review = review
+    next();
+  })
+  .catch(err => console.error(err))
+})
+.get( (req, res, next) => {
+  // Review.findById(+req.params.reviewId)
+  // .then(review => res.json(review))
+  res.json(req.review);
+})
+.put( (req, res, next) => {
+  // Review.findById(+req.params.reviewId)
+  // .then(review => {
+  if (req.user && (req.user.id === req.review.userId || req.user.isAdmin)) {
+    req.review.update({
+      text: req.body.text,
+      rating: req.body.rating,
+      userId: req.body.userId,
+      productId: req.body.productId
+    })
+    .then(updatedReview => res.json(`Succesfully updated: ${updatedReview}`))
+  }
+})
+.delete( (req, res, next) => {
+  // Review.findById(+req.params.reviewId)
+  // .then(review => {
+  if (req.user && (req.user.id === req.review.userId || req.user.isAdmin)) {
+    req.review.destroy()
+    .then(() => res.json(`Succesfully deleted`))
+  }
+})
+
 router.route('/:productId/reviews')
 .get( (req, res, next) => {
   res.json(req.product.reviews)
@@ -32,6 +69,7 @@ router.route('/:productId/reviews')
 // .delete((req, res, next) => {
 //   //only admins or self will delete reviews (MUST BE DONE ON USER SIDE)
 // })
+
 
 //WHEN MAKING REQUESTS!
 // (node:18703) Warning: a promise was created in a handler at /Users/jonathanmartinez/Documents/Fullstack/Immersive/seniorProjects/grace-shopper/node_modules/passport/lib/authenticator.js:339:7 but was not returned from it, see http://goo.gl/rRqMUw
@@ -55,13 +93,15 @@ router.route('/:productId')
       category: req.body.category
     })
     .then(updated => res.json(`Updated product: ${updated}`))
-  } else {res.json('Must be an admin to update product.')}
+  } else {
+    res.status(401).send('Must be an admin to update product.')
+  }
 })
 .delete((req, res, next) => {
   if (req.user && req.user.isAdmin) {
     req.product.destroy()
     .then(() => res.json(`Successfully deleted product`))
-  } else {res.json('Must be an admin to delete product.')}
+  } else {res.status(401).send('Must be an admin to delete product.')}
 })
 
 router.route('/')
@@ -82,5 +122,5 @@ router.route('/')
     })
     .then(product => res.json(product))
     .catch(next);
-  } else {res.json('Must be an admin to post product.')}
+  } else {res.status(401).send('Must be an admin to post product.')}
 })

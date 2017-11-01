@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize');
 const User = require('./user');
 const Review = require('./review');
 const Product = require('./product');
+const products_in_order = require('./products_in_order');
 const Order = require('./order');
-const db = require('../db.js')
+const db = require('../db.js');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -28,15 +28,17 @@ Product.hasMany(Review);
 Order.belongsTo(User);
 User.hasMany(Order);
 
-const ProductsInOrder = db.define('products_in_order', {
-  quantity: Sequelize.INTEGER
-});
+// const ProductsInOrder = db.define('products_in_order', {
+//   quantity: Sequelize.INTEGER
+// });
+Order.belongsToMany(Product, { through: products_in_order });
+Product.belongsToMany(Order, { through: products_in_order });
 
-Order.belongsToMany(Product, { through: ProductsInOrder });
 
 module.exports = {
   User,
   Product,
+  products_in_order,
   Review,
   Order,
   db

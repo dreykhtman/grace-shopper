@@ -5,26 +5,43 @@ const db = require('../db');
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    validate: {
+      notEmpty: true
+    }
   },
   description: {
     type: Sequelize.TEXT
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   stock: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
   },
-  image: {
+  imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: '/public/images/open-box.jpg'
+    defaultValue: '/images/open-box.jpg' // removed public
   },
   category: {
     type: Sequelize.STRING,
     allowNull: false
+  }
+}, {
+  getterMethods: {
+    floatPrice(){
+      return this.getDataValue('price') % 100;
+    }
+  },
+  hooks: {
+    beforeValidate(){
+      //take the price and set it from 100.00 to 10000
+      return this.price * 100
+    }
   }
 })
 
