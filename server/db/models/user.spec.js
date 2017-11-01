@@ -9,6 +9,29 @@ describe('User model', () => {
     return db.sync({ force: true })
   })
 
+  describe('attributes definition', () => {
+    let coby;
+
+    beforeEach(() => {
+      return User.create({
+        email: 'cody@puppybook.com',
+        password: 'bones',
+        name: 'Cody Green',
+        address: '123 Street Pl',
+        cc: '5789615975385246'
+      })
+      .then(user => {
+        coby = user
+      })
+    })
+
+
+    it('includes `name` and `email` fields', () => {
+      expect(coby.name).to.equal('Cody Green')
+      expect(coby.email).to.equal('cody@puppybook.com')
+    })
+  })
+
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
       let cody
@@ -16,7 +39,10 @@ describe('User model', () => {
       beforeEach(() => {
         return User.create({
           email: 'cody@puppybook.com',
-          password: 'bones'
+          password: 'bones',
+          name: 'Cody Green',
+          address: '123 Street Pl',
+          cc: '5789615975385246'
         })
           .then(user => {
             cody = user
