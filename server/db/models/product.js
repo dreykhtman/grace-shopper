@@ -36,13 +36,16 @@ const Product = db.define('product', {
     floatPrice(){
       return this.getDataValue('price') % 100;
     }
-  },
-  hooks: {
-    beforeValidate(){
-      //take the price and set it from 100.00 to 10000
-      return this.price * 100
-    }
   }
+  // hooks: {
+  //   beforeValidate(){
+  //     //take the price and set it from 100.00 to 10000
+  //     this.price = this.price * 100
+  //   }
+  // }
+})
+Product.beforeValidate(product => {
+  product.price = product.price * 100
 })
 
 module.exports = Product;

@@ -1,7 +1,7 @@
 const User = require('./user');
 const Review = require('./review');
 const Product = require('./product');
-const products_in_order = require('./products_in_order');
+const Products_in_order = require('./products_in_order');
 const Order = require('./order');
 const db = require('../db.js');
 
@@ -31,14 +31,14 @@ User.hasMany(Order);
 // const ProductsInOrder = db.define('products_in_order', {
 //   quantity: Sequelize.INTEGER
 // });
-Order.belongsToMany(Product, { through: products_in_order });
-Product.belongsToMany(Order, { through: products_in_order });
+Order.belongsToMany(Product, { through: Products_in_order });
+Product.belongsToMany(Order, { through: Products_in_order });
 
 
 module.exports = {
   User,
   Product,
-  products_in_order,
+  Products_in_order,
   Review,
   Order,
   db
