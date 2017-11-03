@@ -6,9 +6,11 @@
 export {default as Main} from './main';
 export {default as UserHome} from './user-home';
 export {Login, Signup} from './auth-form';
+export {default as AllProducts} from './AllProducts';
 export {default as Navbar} from './Navbar';
 export {default as Footer} from './Footer';
 export {Cart} from './Cart';
 export {Help} from './Help';
 export {About} from './About';
 export {Contact} from './Contact';
+export {default as SingleProduct} from './SingleProduct';

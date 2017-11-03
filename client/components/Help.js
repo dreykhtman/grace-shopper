@@ -5,7 +5,7 @@ export const Help = () => {
     <div>
       <form id="help">
         <label>Full Name:</label>
-        <input type="text" />
+        <input type="text" placeholder="Full name here" />
         <label>E-mail:</label>
         <input type="text" placeholder="E-mail here" />
         <label>Phone Number:</label>
