@@ -124,3 +124,13 @@ router.route('/')
     .catch(next);
   } else {res.status(401).send('Must be an admin to post product.')}
 })
+
+router.get('/category/:categoryName', (req, res, next) => {
+  Product.findAll({
+    where: {
+      category: req.params.categoryName
+    }
+  })
+    .then(products => res.json(products))
+    .catch(next)
+});

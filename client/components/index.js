@@ -12,3 +12,4 @@ export {default as Footer} from './Footer';
 export {Help} from './Help';
 export {About} from './About';
 export {Contact} from './Contact';
+export {default as SingleProduct} from './SingleProduct';

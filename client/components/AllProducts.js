@@ -17,7 +17,6 @@ export const AllProducts = (props) => {
   //   this.fetchProducts()
   // }
   //render() {
-    console.log('In AllProducts, props:', props)
     const prods = props.allProducts;
     return (
       <div className="container">
