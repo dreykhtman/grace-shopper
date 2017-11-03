@@ -34,7 +34,7 @@ const Product = db.define('product', {
 }, {
   getterMethods: {
     floatPrice(){
-      return this.getDataValue('price') % 100;
+      return this.getDataValue('price') / 100;
     }
   }
   // hooks: {
