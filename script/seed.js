@@ -104,23 +104,23 @@ const reviews = [
   { text: "I searched all over the web and couldn't find a compatible amp anywhere, been shredding for a week now and noticed the paint coming off already :(",
   rating: 1.3,
   userId: 1,
-  productId: 1 },
+  productId: products.indexOf(products[0]) + 1 },
   { text: 'Not the fanciest but delivers on the fyah.',
   rating: 3.7,
   userId: 2,
-  productId: 2 },
+  productId: products.indexOf(products[1]) + 1 },
   { text: 'Not sure if ultros likes to cuddle or is trying to strangle me at night but either way I love it ;)',
   rating: 5,
   userId: 3,
-  productId: 3 },
+  productId: products.indexOf(products[2]) + 1 },
   { text: 'My ultros died during shipping :\'(',
   rating: 1.5,
   userId: 5,
-  productId: 3 },
+  productId: products.indexOf(products[2]) + 1 },
   { text: 'Caught me a rare magikarp yesterday on the first try!',
   rating: 4.1,
   userId: 4,
-  productId: 4 }
+  productId: products.indexOf(products[3]) + 1 }
 ]
 
 //console.log('Seeding...');
