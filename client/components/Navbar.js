@@ -6,7 +6,7 @@ import {logout} from '../store';
 
 
 export const Navbar = (props) => {
-  const { handleClick, isLoggedIn} = props
+  const { handleClick, isLoggedIn } = props
   return (
     <div>
     <header >
