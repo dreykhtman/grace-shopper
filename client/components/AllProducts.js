@@ -6,18 +6,19 @@ import {connect} from 'react-redux';
 //import {fetchProducts} from '../store';
 //import store from '../store';
 
-export class AllProducts extends React.Component {
-  constructor(p) {
-    super();
-    // this.state = {products: []};
-    // this.fetchProducts = this.fetchProducts.bind(this);
-  }
+// export class AllProducts extends React.Component {
+//   constructor(p) {
+//     super();
+//     // this.state = {products: []};
+//     // this.fetchProducts = this.fetchProducts.bind(this);
+//   }
+export const AllProducts = (props) => {
   // componentDidMount() {
   //   this.fetchProducts()
   // }
-  render() {
-    console.log('In AllProducts, props:', this.props)
-    const prods = this.props.allProducts;
+  //render() {
+    console.log('In AllProducts, props:', props)
+    const prods = props.allProducts;
     return (
       <div className="container">
         <div className="row">
@@ -34,7 +35,7 @@ export class AllProducts extends React.Component {
         </div>
       </div>
     )
-  }
+  //}
 }
 
 /*
