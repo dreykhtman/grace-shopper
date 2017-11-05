@@ -48,10 +48,27 @@ body {
     }
   }
 
+#qty {
+  display: inline;
+}
+
 img {
   max-width: 100%;
 }
 
 .card {
   width: 40rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.cat{
+  padding: 3rem 5rem 3rem 5rem;
+  background-color: rgba(214, 197, 246, 0.87);
+}
+
+.just-cent{
+  justify-content: center;
 }

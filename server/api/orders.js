@@ -11,13 +11,22 @@ router.get('/', (req, res, next) => {
         res.json(orders)
     })
     .catch(next);
-  } else {res.json('permission denied!')}
+  } else if (req.user) {
+    Order.findAll({where: {userId: req.user.id}}, { include: [{ model: Product}, {model: User, attributes: ['id', 'email', 'name', 'address']}]})
+    .then(orders => {
+        res.json(orders)
+    })
+    .catch(next);
+    //res.json('permission denied!')
+  }
 });
 
 router.get('/:orderId', (req, res, next) => {
   Order.findById(req.params.orderId, {include: {all: true}})
   .then(order => {
-    res.json(order)
+    if (req.user && (order.userId === req.user.id || req.user.isAdmin) ) {
+      res.json(order)
+    } else {res.send('Permission denied, you can only view your own orders, users will be flagged upon requesting other orders.')}
   })
   .catch(next)
 });
