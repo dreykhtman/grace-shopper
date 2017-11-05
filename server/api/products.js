@@ -70,14 +70,6 @@ router.route('/:productId/reviews')
 //   //only admins or self will delete reviews (MUST BE DONE ON USER SIDE)
 // })
 
-
-//WHEN MAKING REQUESTS!
-// (node:18703) Warning: a promise was created in a handler at /Users/jonathanmartinez/Documents/Fullstack/Immersive/seniorProjects/grace-shopper/node_modules/passport/lib/authenticator.js:339:7 but was not returned from it, see http://goo.gl/rRqMUw
-//     at Function.Promise.attempt.Promise.try (/Users/jonathanmartinez/Documents/Fullstack/Immersive/seniorProjects/grace-shopper/node_modules/bluebird/js/release/method.js:29:9)
-// (node:18703) Warning: a promise was created in a handler at /Users/jonathanmartinez/Documents/Fullstack/Immersive/seniorProjects/grace-shopper/server/api/products.js:13:5 but was not returned from it, see http://goo.gl/rRqMUw
-//     at Function.Promise.attempt.Promise.try (/Users/jonathanmartinez/Documents/Fullstack/Immersive/seniorProjects/grace-shopper/node_modules/bluebird/js/release/method.js:29:9)
-// GET /api/products/3/reviews 200 14.462 ms - 310
-
 router.route('/:productId')
 .get((req, res, next) => {
   res.json(req.product)
@@ -125,12 +117,16 @@ router.route('/')
   } else {res.status(401).send('Must be an admin to post product.')}
 })
 
-router.get('/category/:categoryName', (req, res, next) => {
-  Product.findAll({
-    where: {
-      category: req.params.categoryName
-    }
-  })
-    .then(products => res.json(products))
-    .catch(next)
-});
+// If time permits we'll separate more...
+// router.get('/category/:categoryName', (req, res, next) => {
+//   Product.findAll({
+//     where: {
+//       category: req.params.categoryName
+//     }
+//   })
+//   .then(products => {
+//     console.log('prods by cats:', products);
+//     res.json(products);
+//   })
+//   .catch(next)
+// });

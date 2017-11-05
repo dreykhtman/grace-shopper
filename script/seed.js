@@ -71,10 +71,10 @@ const users = usersBasic.map(user => {
 
 //Remember to render products with a stock of 0 as "Out of stock"
 const products = [
-  { name: 'Air guitar', description: 'Lightweight instrument of the imagination', price: 199.99, stock: 3, imageUrl: 'https://images.8tracks.com/cover/i/000/493/172/1342757372-imglargephotoairguitar1-9129.jpg?rect=0,37,424,424&q=98&fm=jpg&fit=max&w=320&h=320', category: 'instruments'},
-  { name: 'FF wig', description: 'Fiery and fancy wig', price: 99.99, stock: 5, imageUrl: 'https://i.pinimg.com/736x/ca/93/80/ca9380f90a855e1d6b69558013bca960--red-wigs-costume-wigs.jpg', category: 'wigs'},
-  { name: 'Ultros', description: 'Demonic octopus', price: 999.99, stock: 0, imageUrl: 'http://www.creativeuncut.com/gallery-18/art/ff13-2-ultros.jpg', category: 'live exotic animals'},
-  { name: 'Ultraball', description: 'Advanced pokeball for catching special pokemons', price: 29.99, stock: 10, imageUrl: 'https://i5.walmartimages.com/asr/240ed451-66e8-48f6-bda2-aa63d16108ff_1.1a50b5d9b27de5bbe30ae8b25b52eb58.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff', category: 'toys'}
+  { name: 'Air guitar', description: 'Lightweight instrument of the imagination', price: 199.99, stock: 3, imageUrl: 'https://images.8tracks.com/cover/i/000/493/172/1342757372-imglargephotoairguitar1-9129.jpg?rect=0,37,424,424&q=98&fm=jpg&fit=max&w=320&h=320', category: 'Instruments'},
+  { name: 'FF wig', description: 'Fiery and fancy wig', price: 99.99, stock: 5, imageUrl: 'https://i.pinimg.com/736x/ca/93/80/ca9380f90a855e1d6b69558013bca960--red-wigs-costume-wigs.jpg', category: 'Wigs'},
+  { name: 'Ultros', description: 'Demonic octopus', price: 999.99, stock: 0, imageUrl: 'http://www.creativeuncut.com/gallery-18/art/ff13-2-ultros.jpg', category: 'Live Exotic Creatures'},
+  { name: 'Ultraball', description: 'Advanced pokeball for catching special pokemons', price: 29.99, stock: 10, imageUrl: 'https://i5.walmartimages.com/asr/240ed451-66e8-48f6-bda2-aa63d16108ff_1.1a50b5d9b27de5bbe30ae8b25b52eb58.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff', category: 'Toys'}
 ]
 
 const orders = [
@@ -83,8 +83,8 @@ const orders = [
   {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 3},
   {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 4},
   {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 5},
-  {placed: false, timePlaced: Date.now(), userId: 5},
-  {placed: false, timePlaced: Date.now(), userId: 6},
+  {placed: false, userId: 5},
+  {placed: false, userId: 6},
 ]
 
 const orderedProducts = [

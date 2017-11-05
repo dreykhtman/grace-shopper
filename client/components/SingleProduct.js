@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default class SingleProduct extends Component {
@@ -23,18 +23,11 @@ export default class SingleProduct extends Component {
       });
   }
 
-  // createSelectItems() {
-  //   let items = [];
-  //   for (let i = 0; i <= this.state.product.stock; i++) {
-  //     items.push(<option key={i} value={i}>{i}</option>);
-  //   }
-  //   return items;
-  // }
-
   render() {
     const product = this.state.product;
     const reviews = product.reviews;
-    const stockArr = new Array(10);
+    let stock = product.stock;
+    let qtyArr = [...Array(stock)];
 
     return (
       <div className="container">
@@ -67,16 +60,15 @@ export default class SingleProduct extends Component {
               </li>
               <li className="list-group-item">Category: {this.state.category}</li>
             </ul>
+            <form>
             <select>
-                  {/* fix this! */}
-              {
-                stockArr && stockArr.map((o, i) => (
-                  <p>hello</p>
-                ))
-              }
+              <option>Quantity:</option>
+              { qtyArr.length ? qtyArr.length && qtyArr.map( (el, i) => (<option key={i}>{i + 1}</option>) )
+              : <option>Out of Stock</option>}
             </select>
+            </form>
             <div className="card-block">
-              <button type="button" className="btn btn-secondary"><i className="material-icons">add_shopping_cart</i>Add to cart</button>
+              <button type="button" className="btn btn-secondary"><i className="material-icons">add_shopping_cart</i> Add to cart</button>
             </div>
           </div>
         </div>

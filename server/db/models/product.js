@@ -28,7 +28,7 @@ const Product = db.define('product', {
     defaultValue: '/images/open-box.jpg' // removed public
   },
   category: {
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM('Instruments', 'Wigs', 'Live Exotic Creatures', 'Toys'),
     allowNull: false
   }
 }, {
