@@ -16,3 +16,5 @@ export {Help} from './Help';
 export {About} from './About';
 export {Contact} from './Contact';
 export {default as SingleProduct} from './SingleProduct';
+export {default as AllUsers} from './AllUsers';
+export {default as EditUserForm} from './EditUserForm';

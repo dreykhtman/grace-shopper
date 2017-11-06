@@ -6,7 +6,7 @@ import {logout} from '../store';
 
 
 export const Navbar = (props) => {
-  const { handleClick, isLoggedIn } = props
+  const { handleClick, isLoggedIn, isAdmin } = props;
   return (
     <div>
     <header >
@@ -47,6 +47,14 @@ export const Navbar = (props) => {
                 <Link to="/signup">Sign Up</Link>
               </div>
           }
+          {
+            isAdmin
+              ? <div>
+                <Link to="/users">Users</Link>
+              </div>
+              :
+              <div />
+          }
         </div>
       </nav>
     </header>
@@ -60,7 +68,8 @@ export const Navbar = (props) => {
 */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
