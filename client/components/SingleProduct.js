@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default class SingleProduct extends Component {
@@ -58,7 +58,7 @@ export default class SingleProduct extends Component {
                   }
                 </ul>
               </li>
-              <li className="list-group-item">Category: {this.state.category}</li>
+              <li className="list-group-item">Category: <Link to={`/products/category/${this.state.category}`}>{this.state.category}</Link></li>
             </ul>
             <form>
             <select>
