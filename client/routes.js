@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Router} from 'react-router'
+import {Router, Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
@@ -26,6 +26,7 @@ class Routes extends Component {
           <Navbar />
             <Switch>
               {/* Routes placed here are available to all visitors */}
+              {/* <Redirect from="/" to="/home" /> */}
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/help" component={Help} />
@@ -35,7 +36,8 @@ class Routes extends Component {
               <Route exact path="/products" component={AllProducts} />
               <Route exact path="/products/:id" component={SingleProduct} />
               <Route exact path="/products/category/:categoryName" component={AllProducts} />
-              <Route path="/home" component={UserHome} />
+              <Route exact path="/" component={UserHome} />
+              <Route exact path="/home" component={UserHome} />
               {
                 isLoggedIn &&
                   <Switch>

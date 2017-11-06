@@ -12,7 +12,7 @@ export const Navbar = (props) => {
     <header >
       <nav>
         <div>
-          <Link to="/home" title="Home">
+          <Link to="/" title="Home">
             <img id="logo" src="https://ultros.io/static/images/fanart/rakiru_1.png" alt="Store logo" height="100em" width="auto" />
           </Link>
         </div>
