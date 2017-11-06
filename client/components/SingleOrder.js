@@ -1,12 +1,23 @@
 import React, {Component} from 'react'
-//import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fetchSingleOrder} from '../store';
+import axios from 'axios';
 
 export class SingleOrder extends Component {
+  constructor() {
+    super()
+    this.state = {edit: false, placed: '', timePlaced: '', shippedDate: '', deliveryDate: ''};
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
   componentDidMount () {
     this.findId.bind(this);
     this.props.loadOrder(this.findId())
+    console.log('this.props', this.props);
   }
 
   findId() {
@@ -14,24 +25,60 @@ export class SingleOrder extends Component {
     return +this.props.location.pathname.slice(idxToSlice + 1);
   }
 
+  handleEdit(e) {
+    this.setState({edit: !this.state.edit})
+  }
+  handleChange(e) {
+    const name = e.target.name;
+    const val = e.target.value;
+    this.setState({ [name]: val })
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    let state = this.state;
+    let order = this.props.singleOrder;
+    const editId = this.props.match.params.orderId;
+    let placed = state.placed ? Boolean(state.placed) : Boolean(order.placed)
+    let timePlaced = state.timePlaced ? state.timePlaced : order.timePlaced
+    let shippedDate = state.shippedDate ? state.shippedDate : order.shippedDate
+    let deliveryDate = state.deliveryDate ? state.deliveryDate : order.deliveryDate
+    const orderToUpdate = Object.assign({}, {placed, timePlaced, shippedDate, deliveryDate});
+
+    axios.put(`/api/orders/${editId}`, orderToUpdate)
+    .then(res => res.data)
+    .then(updatedOrder => {
+      console.log(`Updated: ${updatedOrder}`);
+    })
+    window.location.reload();
+  }
+  handleDelete(e) {
+    const deleteId = this.props.match.params.orderId;
+    axios.delete(`/api/orders/${deleteId}`)
+    .then(res => res.data)
+    .then( () => this.props.history.goBack())
+  }
+
   render () {
     const order = this.props.singleOrder;
     if (!order) return null;
     //Need to map through this for current price?
     const orderedProducts = order.products;
-    console.log('order:', order)
     //Render denied mssg if attempting to access wrong order
     if (typeof order === 'string') {return (<h3>'Permission denied, you can only view your own orders. For the security of our customers, you will be flagged upon requesting orders of other users.'</h3>)}
     //Need shipping info?
     if (!order.user) return null;
     const userOrdering = order.user;
-    return ( <div className="container">
+
+    return (
+      <div className="container">
+        <h3>Order: {order.id} for User:&nbsp;
+          <Link to={`/users/${order.userId}`}>{userOrdering.name}</Link>
+        </h3>
         <div className="row">
-          { order && (<div className="col-md-4">
+        { !this.state.edit && order ? (
+          ( <div className="col-md-4">
             <div className="thumbnail">
               <ul>
-                <li> Order Id: {order.id} </li>
-                <li> User Id: {order.userId} </li>
                 <li> {`Placed: ${order.placed}`} </li>
                 <li> Time Placed:
                   { order.timePlaced ?
@@ -55,53 +102,71 @@ export class SingleOrder extends Component {
                   </ul>) : ' null' }
                 </li>
               </ul>
+              <button className="btn btn-warning" onClick={this.handleEdit}>Edit Order</button>
             </div>
-          </div> ) }
+          </div>)) : (
+          <div className="col-md-4">
+            <form className="thumbnail" onChange={this.handleChange} onSubmit={this.handleSubmit}>
+              <label>Order Placed:</label>
+              <select name="placed">
+                <option>{`${order.placed}`}</option>
+                <option>{`${!order.placed}`}</option>
+              </select>
+              <label>Time Placed:</label>
+              <input type="text" name="timePlaced" placeholder={order.timePlaced ? `${order.timePlaced}` : 'null'} />
+              <label>Ship Date:</label>
+              <input type="text" name="shippedDate" placeholder={order.shippedDate ? `${order.shippedDate}` : 'null'} />
+              <label>Delivery Date:</label>
+              <input type="text" name="deliveryDate" placeholder={order.deliveryDate ? `${order.deliveryDate}` : 'null'} />
+              <button type="submit" className="btn btn-warning">Submit Edit</button>
+              <button className="btn btn-danger" onClick={this.handleDelete}>Cancel Order</button>
+            </form>
+          </div>) }
+
           <div className="col-md-4">
             <ul>
               <li>User Id: {userOrdering.id}</li>
-              <li>isAdmin: {userOrdering.isAdmin}</li>
+              <li>isAdmin: {`${userOrdering.isAdmin}`}</li>
               <li>Name: {userOrdering.name}</li>
               <li>Email: {userOrdering.email}</li>
               <li>GoogleId: {userOrdering.googleId}</li>
               <li>Address: {userOrdering.address}</li>
             </ul>
           </div>
+
           <div>
-            <table style={{width: '50%'}}>
-            <thead>
-            <tr>
-              <th>Product ID: &nbsp;&nbsp;&nbsp;</th>
-              <th>Product Name: &nbsp;&nbsp;&nbsp;</th>
-              <th>Product Price: &nbsp;&nbsp;&nbsp;</th>
-              <th>Quantity: &nbsp;&nbsp;&nbsp;</th>
-              <th>Total Price: &nbsp;&nbsp;&nbsp;</th>
-            </tr>
-            </thead>
-            <tbody>
-            {
-              orderedProducts && orderedProducts.map(prod => (
-                <tr key={prod.id}>
-                  <td>{prod.id}</td>
-                  <td>{prod.name}</td>
-                  <td>{prod.floatPrice}</td>
-                  <td>{prod.products_in_order.quantity}</td>
-                  <td>{'Need fnc for total$/prod!'}</td>
+            <table style={{width: '50%'}} className="table table-hover table-bordered">
+              <thead>
+                <tr >
+                  <th>Product ID: &nbsp;&nbsp;</th>
+                  <th>Product Name: &nbsp;&nbsp;&nbsp;</th>
+                  <th>Product Price: &nbsp;&nbsp;&nbsp;</th>
+                  <th>Quantity: &nbsp;&nbsp;&nbsp;</th>
+                  <th>Total Price: &nbsp;&nbsp;&nbsp;</th>
                 </tr>
-              ))
-            }
-            <tr>
-              <td>{''}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>{'Need fnc for total$ of order!'}</td>
-            </tr>
-            </tbody>
+              </thead>
+              <tbody>
+                { orderedProducts && orderedProducts.map(prod => (
+                  <tr key={prod.id}>
+                    <td>{prod.id}</td>
+                    <td>{prod.name}</td>
+                    <td>{prod.floatPrice}</td>
+                    <td>{prod.products_in_order.quantity}</td>
+                    <td className="total-price">{(prod.floatPrice * prod.products_in_order.quantity).toFixed(2)}</td>
+                  </tr>
+                )) }
+                <tr>
+                  <td>{''}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>{'Need fnc for total$ of order!'}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
-      </div>
-    </div> )
+        </div>
+      </div> )
   }
 }
 
