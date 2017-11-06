@@ -6,13 +6,13 @@ import {logout} from '../store';
 
 
 export const Navbar = (props) => {
-  const { handleClick, isLoggedIn } = props
+  const { handleClick, isLoggedIn, isAdmin } = props;
   return (
     <div>
     <header >
       <nav>
         <div>
-          <Link to="/home" title="Home">
+          <Link to="/" title="Home">
             <img id="logo" src="https://ultros.io/static/images/fanart/rakiru_1.png" alt="Store logo" height="100em" width="auto" />
           </Link>
         </div>
@@ -47,6 +47,14 @@ export const Navbar = (props) => {
                 <Link to="/signup">Sign Up</Link>
               </div>
           }
+          {
+            isAdmin
+              ? <div>
+                <Link to="/users">Users</Link>
+              </div>
+              :
+              <div />
+          }
         </div>
       </nav>
     </header>
@@ -60,7 +68,8 @@ export const Navbar = (props) => {
 */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 

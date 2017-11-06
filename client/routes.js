@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Router} from 'react-router'
+import {Router, Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder} from './components'
+import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder, AllUsers, EditUserForm} from './components'
 import {me, fetchProducts} from './store'
 import { fetchOrder } from './store/cart'
+import { fetchAllUsers } from './store/admin';
 
 
 /**
@@ -18,8 +19,7 @@ class Routes extends Component {
   }
 
   render () {
-    const {isLoggedIn} = this.props
-
+    const {isLoggedIn, isAdmin} = this.props;
     return (
       <Router history={history}>
         <Main>
@@ -35,6 +35,8 @@ class Routes extends Component {
               <Route exact path="/products" component={AllProducts} />
               <Route exact path="/products/:id" component={SingleProduct} />
               <Route exact path="/products/category/:categoryName" component={AllProducts} />
+              <Route exact path="/" component={UserHome} />
+              <Route exact path="/home" component={UserHome} />
               <Route path="/home" component={UserHome} />
               {
                 isLoggedIn &&
@@ -42,6 +44,13 @@ class Routes extends Component {
                     {/* Routes placed here are only available after logging in */}
                     <Route path="/orders/:orderId" component={SingleOrder} />
                     <Route path="/orders" component={Orders} />
+                    {
+                      isAdmin &&
+                      <Switch>
+                        <Route exact path="/users" component={AllUsers} />
+                        <Route exact path="/users/:userId" component={EditUserForm} />
+                      </Switch>
+                    }
                   </Switch>
               }
               {/* Displays our Login component as a fallback */}
@@ -64,7 +73,8 @@ const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
@@ -74,6 +84,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       dispatch(fetchProducts())
       dispatch(fetchOrder(6))
+      dispatch(fetchAllUsers())
     }
   }
 }
