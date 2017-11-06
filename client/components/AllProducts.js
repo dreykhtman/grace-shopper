@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import SingleProductCard from './SingleProductCard';
 
 export const AllProducts = (props) => {
     const prods = props.allProducts;
@@ -15,12 +16,13 @@ export const AllProducts = (props) => {
         {
           prods && byCat.map(product =>
             ( <div className="col-md-4" key={product.id}>
-              <div className="thumbnail">
+            <SingleProductCard product={product} />
+              {/* <div className="thumbnail">
                 <Link to={`/products/${product.id}`}>
                 <h3>{product.name}</h3>
                 <img src={product.imageUrl} />
                 </Link>
-              </div>
+              </div> */}
             </div>
             )
           )
@@ -45,7 +47,6 @@ export const AllProducts = (props) => {
  * CONTAINER
 */
 const mapState = state => {
-  console.log('in allProdCont!', 'state:', state)
   return {
     allProducts: state.products.allProducts
   }
