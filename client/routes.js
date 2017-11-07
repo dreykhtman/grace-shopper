@@ -4,7 +4,7 @@ import {Router, Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder, AllUsers, EditUserForm, FilteredProducts} from './components'
+import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder, AllUsers, EditUserForm, FilteredProducts, AdminProductPage, EditProductForm} from './components'
 import {me, fetchProducts} from './store'
 import { fetchOrder } from './store/cart'
 import { fetchAllUsers } from './store/admin';
@@ -50,6 +50,8 @@ class Routes extends Component {
                       <Switch>
                         <Route exact path="/users" component={AllUsers} />
                         <Route exact path="/users/:userId" component={EditUserForm} />
+                        <Route exact path="/edit_products" component={AdminProductPage} />
+                        <Route exact path="/products/:productId/edit" component={EditProductForm} />
                       </Switch>
                     }
                   </Switch>

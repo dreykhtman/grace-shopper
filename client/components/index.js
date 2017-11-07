@@ -21,3 +21,6 @@ export {default as EditUserForm} from './EditUserForm';
 export {default as SearchProducts} from './SearchProducts';
 export {SingleProductCard} from './SingleProductCard';
 export {FilteredProducts} from './FilteredProducts';
+export {default as AdminProductPage} from './AdminProductPage';
+export {EditProductForm} from './EditProductForm';
+
