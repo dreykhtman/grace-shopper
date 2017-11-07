@@ -1,6 +1,5 @@
 const router = require('express').Router()
-const {Product} = require('../db/models')
-const {Review} = require('../db/models')
+const {Product, Review, Products_in_order, Order} = require('../db/models')
 module.exports = router
 
 router.param('productId', (req, res, next, id) => {
@@ -116,6 +115,36 @@ router.route('/')
     .catch(next);
   } else {res.status(401).send('Must be an admin to post product.')}
 })
+
+router.route('/:productId/cart')
+// .get((req, res, next) => {
+//   res.json(req.product)
+// })
+.post((req, res, next) => {
+  if (req.user) {
+    Order.create({
+      userId: req.body.userId,
+      timePlaced: Date.now()
+    })
+    .then(order => {
+      return Products_in_order.create({
+        quantity: req.body.quantity,
+        purchasePrice: req.body.price,
+        productId: req.body.productId,
+        orderId: order.id
+      })
+    })
+    .then(created => res.json(`Created order: ${created}`))
+    .catch(next);
+  }
+})
+.delete((req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    req.product.destroy()
+    .then(() => res.json(`Successfully deleted order`))
+  } else {res.status(401).send('Must be an admin to delete order.')}
+})
+
 
 // If time permits we'll separate more...
 // router.get('/category/:categoryName', (req, res, next) => {

@@ -38,10 +38,7 @@ class Routes extends Component {
               <Route exact path="/products/category/:categoryName" component={AllProducts} />
               <Route exact path="/" component={UserHome} />
               <Route exact path="/home" component={UserHome} />
-<<<<<<< HEAD
               <Route path="/home" component={UserHome} />
-=======
->>>>>>> master
               {
                 isLoggedIn &&
                   <Switch>

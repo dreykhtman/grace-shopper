@@ -4,17 +4,21 @@ module.exports = router
 
 
 router.get('/', (req, res, next) => {
-  User.findAll({
-    // explicitly select only the id and email fields - even though
-    // users' passwords are encrypted, it won't help if we just
-    // send everything to anyone who asks!
-    attributes: {
-      include: ['id', 'email', 'name', 'address'],
-      exclude: ['cc', 'password', 'salt', 'googleId']
-    }
-  })
-    .then(users => res.json(users))
-    .catch(next)
+  if (req.user.isAdmin) {
+    User.findAll({
+      // explicitly select only the id and email fields - even though
+      // users' passwords are encrypted, it won't help if we just
+      // send everything to anyone who asks!
+      attributes: {
+        include: ['id', 'email', 'name', 'address'],
+        exclude: ['cc', 'password', 'salt', 'googleId']
+      }
+    })
+      .then(users => res.json(users))
+      .catch(next)
+  } else {
+    res.status(403).json('Access denied!')
+  }
 });
 
 
@@ -31,7 +35,7 @@ router.get('/:id/orders', (req, res, next) => {
       })
       .catch(next)
   } else {
-    res.json('Access denied!')
+    res.status(403).json('Access denied!')
   }
 });
 
@@ -55,7 +59,7 @@ router.get('/:id', (req, res, next) => {
     })
     .catch(next);
   // } else {
-  //   res.json('Access denied!')
+  //   res.status(403).json('Access denied!')
   // }
 });
 
@@ -74,7 +78,7 @@ router.put('/:id', (req, res, next) => {
       .then(user => res.json(user))
       .catch(next);
   } else {
-    res.json('Access denied!')
+    res.status(403).json('Access denied!')
   }
 });
 
@@ -85,6 +89,6 @@ router.delete('/:id', (req, res, next) => {
       .then(() => res.status(204).end())
       .catch(next);
   } else {
-    res.json('Access denied!')
+    res.status(403).json('Access denied!')
   }
 });
