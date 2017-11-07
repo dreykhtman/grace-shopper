@@ -84,7 +84,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       dispatch(fetchProducts())
-      dispatch(fetchOrder(6))
+
       dispatch(fetchAllUsers())
     }
   }

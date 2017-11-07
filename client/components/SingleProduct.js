@@ -51,7 +51,7 @@ export class SingleProduct extends Component {
       userId: this.setId()
     })
       .then(res => res.data)
-      .then(() => { window.location.href = '/cart';})
+      .then(() => { window.location.href = '/cart'; })
   }
 
   render() {
@@ -60,7 +60,6 @@ export class SingleProduct extends Component {
     let stock = product.stock;
     let qtyArr = [...Array(stock)];
 
-    console.log(this.state)
     return (
       <div className="container">
         <div className="row">
@@ -100,7 +99,11 @@ export class SingleProduct extends Component {
               </select>
             </form>
             <div className="card-block">
-              <button onClick={this.handleClick} type="button" className="btn btn-secondary"><i className="material-icons">add_shopping_cart</i> Add to cart</button>
+              <button
+                onClick={this.handleClick}
+                type="button" className="btn btn-secondary"
+                disabled={(!qtyArr.length || !this.state.quantity)}
+              ><i className="material-icons">add_shopping_cart</i> Add to cart</button>
             </div>
           </div>
         </div>
