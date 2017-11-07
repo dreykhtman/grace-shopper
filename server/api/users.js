@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { User, Order, Product } = require('../db/models')
+const { User, Order, Product} = require('../db/models')
 module.exports = router
 
 
@@ -20,18 +20,13 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id/orders', (req, res, next) => {
   if (req.user && (req.user.id === +req.params.id || req.user.isAdmin)) {
-    User.findById(+req.params.id, {
-      attributes: {
-        include: [{ all: true, nested: true }],
-        // exclude: ['password', 'salt', 'googleId'] do we need this here?
-      }
-    })
-      .then(user => {
-        res.json(user)
+    Order.findAll({ where: { userId: +req.params.id }, include: [{ model: Product }] })
+      .then(order => {
+        res.json(order)
       })
       .catch(next)
   } else {
-    res.json('Access denied!')
+    res.status(403).send('Access denied!')
   }
 });
 
