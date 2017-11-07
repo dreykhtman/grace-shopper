@@ -20,16 +20,6 @@ export const Navbar = (props) => {
         <div id="nav-features">
           <div>
             <SearchProducts products={props.allProducts} />
-            {
-            // <form id="search">
-            //   <input type="text" placeholder="Search" />
-            //   <Link to="/search" title="Search">
-            //     <button>
-            //       <i className="material-icons">search</i>
-            //     </button>
-            //   </Link>
-            // </form>
-            }
           </div>
           <div>
             <Link to="/cart" title="Cart">
