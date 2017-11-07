@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { addToCart, fetchOrder } from '../store/cart';
+import store from '../store';
 
 export default class SingleProduct extends Component {
   constructor() {
     super();
     this.state = {
       product: {},
-      category: ''
+      category: '',
+      quantity: 0
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -22,6 +28,14 @@ export default class SingleProduct extends Component {
         });
       });
   }
+
+  handleChange(event) {
+    this.setState({ quantity: event.target.value })
+  }
+
+  // handleClick(event) {
+  //   console.log('hello')
+  // }
 
   render() {
     const product = this.state.product;
@@ -61,14 +75,16 @@ export default class SingleProduct extends Component {
               <li className="list-group-item">Category: <Link to={`/products/category/${this.state.category}`}>{this.state.category}</Link></li>
             </ul>
             <form>
-            <select>
-              <option>Quantity:</option>
-              { qtyArr.length ? qtyArr.length && qtyArr.map( (el, i) => (<option key={i}>{i + 1}</option>) )
-              : <option>Out of Stock</option>}
-            </select>
+              <select onChange={this.handleChange}>
+                <option>Quantity:</option>
+                {qtyArr.length ? qtyArr.length && qtyArr.map((el, i) => (<option key={i} value={i + 1}>{i + 1}</option>))
+                  : <option>Out of Stock</option>}
+              </select>
             </form>
             <div className="card-block">
-              <button type="button" className="btn btn-secondary"><i className="material-icons">add_shopping_cart</i> Add to cart</button>
+              <Link to="/cart">
+                <button type="button" className="btn btn-secondary"><i className="material-icons">add_shopping_cart</i> Add to cart</button>
+              </Link>
             </div>
           </div>
         </div>

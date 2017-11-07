@@ -10,9 +10,8 @@ import Category from './Category';
 export const UserHome = (props) => {
   const { email } = props
   const allProds = props.products;
-
   let byCat = allProds.reduce((acc, curr) => {
-    acc[curr.category] = acc[curr.category] ? acc[curr.category].push(curr) : [curr];
+    acc[curr.category] = acc[curr.category] ? null : [curr];
     return acc;
   }, {})
   let cats = Object.keys(byCat)
