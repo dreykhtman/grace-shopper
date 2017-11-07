@@ -34,6 +34,7 @@ export const Navbar = (props) => {
                 {/* The navbar will show these links after you log in
                 Have to add account button when logged in as well*/}
                 <a href="#" onClick={handleClick}>Logout</a>
+                <Link to="/account">My Account</Link>
               </div>
               : <div>
                 {/* The navbar will show these links before you log in */}

@@ -4,7 +4,7 @@ import {Router, Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder, AllUsers, EditUserForm, FilteredProducts} from './components'
+import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder, AllUsers, EditUserForm, FilteredProducts, AccountPage} from './components'
 import {me, fetchProducts} from './store'
 import { fetchOrder } from './store/cart'
 import { fetchAllUsers } from './store/admin';
@@ -45,11 +45,12 @@ class Routes extends Component {
                     {/* Routes placed here are only available after logging in */}
                     <Route path="/orders/:orderId" component={SingleOrder} />
                     <Route path="/orders" component={Orders} />
+                    <Route path="/account" component={AccountPage} />
+                    <Route exact path="/users/:userId" component={EditUserForm} />
                     {
                       isAdmin &&
                       <Switch>
                         <Route exact path="/users" component={AllUsers} />
-                        <Route exact path="/users/:userId" component={EditUserForm} />
                       </Switch>
                     }
                   </Switch>
