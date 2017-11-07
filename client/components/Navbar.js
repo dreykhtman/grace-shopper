@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {logout} from '../store';
+import { SearchProducts } from './';
 
 
 export const Navbar = (props) => {
@@ -18,14 +19,17 @@ export const Navbar = (props) => {
         </div>
         <div id="nav-features">
           <div>
-            <form id="search">
-              <input type="text" placeholder="Search" />
-              <Link to="/search" title="Search">
-                <button>
-                  <i className="material-icons">search</i>
-                </button>
-              </Link>
-            </form>
+            <SearchProducts products={props.allProducts} />
+            {
+            // <form id="search">
+            //   <input type="text" placeholder="Search" />
+            //   <Link to="/search" title="Search">
+            //     <button>
+            //       <i className="material-icons">search</i>
+            //     </button>
+            //   </Link>
+            // </form>
+            }
           </div>
           <div>
             <Link to="/cart" title="Cart">
@@ -69,7 +73,8 @@ export const Navbar = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    isAdmin: !!state.user.isAdmin
+    isAdmin: !!state.user.isAdmin,
+    allProducts: state.products.allProducts
   }
 }
 

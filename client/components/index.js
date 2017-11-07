@@ -18,3 +18,5 @@ export {Contact} from './Contact';
 export {default as SingleProduct} from './SingleProduct';
 export {default as AllUsers} from './AllUsers';
 export {default as EditUserForm} from './EditUserForm';
+export {default as SearchProducts} from './SearchProducts';
+export {FilteredProducts} from './FilteredProducts';
