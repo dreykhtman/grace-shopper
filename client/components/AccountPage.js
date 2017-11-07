@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import { Contact } from './index';
 
 export class AccountPage extends Component {
     constructor (props) {
@@ -23,6 +24,7 @@ export class AccountPage extends Component {
         const pastOrders = this.state.orders.filter(order => {
             return order.placed
         });
+        console.log('past orders', pastOrders);
         return (
             <div>
                 <h2>Account Info:</h2>
@@ -38,23 +40,45 @@ export class AccountPage extends Component {
                     <div className="orderHistory">
                     {
                         pastOrders.map(pastOrder => {
-                            let products = pastOrder.products;
                             return (
                                 <div key={pastOrder.id}>
                                     <h4>{`Placed on ${pastOrder.timePlaced.slice(0, 10)}`}</h4>
                                     {
-                                    products.map(product => {
-                                        return (
-                                            <h5 key={product.id}>{product.name}</h5>
-                                        )
-                                    })
+                                        pastOrder.products.map(product => {
+                                            return (
+                                            <div key={product.id}>
+                                                <h5><span>{`${product.products_in_order.quantity} - `}</span><span>{product.name}</span></h5>
+                                            </div>
+                                            )
+                                        })
+                                    }
+                                    <h4>Order Subtotal Goes Here</h4>
+                                    {
+                                        pastOrder.deliveryDate
+                                        ? <div>
+                                            <h5>{`Status: Delivered on ${pastOrder.deliveryDate.slice(0, 10)}`}</h5>
+                                        </div>
+                                        : <div>
+                                        {
+                                            pastOrder.shippedDate
+                                            ? <div>
+                                                <h5>{`Status: Shipped on ${pastOrder.shippedDate.slice(0, 10)}`}</h5>
+                                            </div>
+                                            : <div>
+                                                <h5>{`Status: Your order is being processed.`}</h5>
+                                            </div>
+                                        }
+                                        </div>
+                                        
                                     }
                                 </div>
                             )
                         })
                     }
                     </div>
-
+                    <Link to="/contact">
+                        <button className="btn btn-danger">Returns & Exchanges</button>
+                    </Link>
             </div>
         )
     }
