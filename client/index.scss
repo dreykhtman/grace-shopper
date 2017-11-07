@@ -57,10 +57,21 @@ body {
 //   height: auto;
 // }
 
-.card {
-  width: 34rem;
-  height: 34rem;
+.singleproductcard {
+  width: 25rem;
+  height: 25rem;
   border: 1px solid rgb(216, 216, 216);
+}
+
+.singleproduct {
+  height: auto;
+}
+
+.cardimg {
+  display: block;
+  margin: auto;
+  max-height: auto;
+  max-width: 15rem;
 }
 
 .flex {
@@ -84,10 +95,12 @@ body {
 #viewbtn {
   position: absolute;
   width: 100%;
-  bottom: 5%;
+  bottom: -1%;
 }
 
-.cardimg {
-  width: 20rem;
-  height: auto;
+.singleproductimg {
+  display: block;
+  margin: auto;
+  height: 20rem;
+  width: auto;
 }

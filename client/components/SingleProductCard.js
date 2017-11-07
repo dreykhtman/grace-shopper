@@ -5,7 +5,7 @@ const SingleProductCard = (props) => {
   const { product } = props;
 
   return (
-    <div id="singleproduct" className="card">
+    <div id="singleproduct" className="singleproductcard card">
       <div className="card-block">
         <Link to={`/products/${product.id}`} ><h4 className="card-title">{product.name}
         </h4></Link>
