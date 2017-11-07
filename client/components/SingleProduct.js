@@ -46,9 +46,9 @@ export default class SingleProduct extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="card col">
+          <div className="singleproduct card col">
             <h3 className="card-title">{product.name}</h3>
-            <img className="card-img-top" src={product.imageUrl} />
+            <img className="singleproductimg card-img-top" src={product.imageUrl} />
             <div className="card-block">
               <h5 className="card-title">About the product</h5>
               <p className="card-text">{product.description}</p>
