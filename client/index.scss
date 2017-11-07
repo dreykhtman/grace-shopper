@@ -52,13 +52,15 @@ body {
   display: inline;
 }
 
-img {
-  max-width: 50%;
-  height: auto;
-}
+// img {
+//   max-width: 50%;
+//   height: auto;
+// }
 
 .card {
-  width: 40rem;
+  width: 34rem;
+  height: 34rem;
+  border: 1px solid rgb(216, 216, 216);
 }
 
 .flex {
@@ -74,13 +76,18 @@ img {
   justify-content: center;
 }
 
-#singleproduct {
-  border: 1px solid rgb(216, 216, 216);
-  width: 34rem;
-  align-content: center;
-}
-
 #logo {
   max-width: 180px;
+  height: auto;
+}
+
+#viewbtn {
+  position: absolute;
+  width: 100%;
+  bottom: 5%;
+}
+
+.cardimg {
+  width: 20rem;
   height: auto;
 }
