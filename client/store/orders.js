@@ -48,7 +48,6 @@ export const fetchCart = (userId) =>
     axios.get(`/api/users/${userId}/cart`)
       .then(res => res.data)
       .then(cart => {
-        console.log('The cart...', cart)
         dispatch(getCart(cart))
       })
       .catch(err => console.log(err))

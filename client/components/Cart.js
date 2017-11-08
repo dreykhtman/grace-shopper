@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 export class Cart extends Component {
 
   constructor() {
     super();
-    // this.state = {
-    //   cart: []
-    // }
+    this.state = {
+      promo: ''
+    }
+
     this.onQtChange = this.onQtChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    if (this.state.promo === 'COREYSBDA') {
+      alert('50% discount! For real!')
+    }
+    this.setState({ promo: event.target.value })
   }
 
   onQtChange(event) {
@@ -24,7 +33,7 @@ export class Cart extends Component {
     if (!orders) return null;
     const cartReady = orders[0].products;
 
-    console.log('PROPS:', this.props, 'CART:', cart, 'cartReady:', cartReady)
+
     return (
       <div>
         <h1>Your Shopping Cart</h1>
@@ -58,10 +67,23 @@ export class Cart extends Component {
               )
             })
           }
-          <div style={{marginTop: '33px'}}>
+          <div>
+            <h3>Total: {
+              cartReady && cartReady.reduce((curr, next) => {
+                return curr + next.floatPrice * next.products_in_order.quantity
+              }, 0)
+            }</h3>
+
+          </div>
+          <div style={{ marginTop: '33px' }}>
             <form>
               <label>Promotion Code:</label>
-              <input type="text" placeholder="Enter Code Here" />
+              <input
+                type="text"
+                value={this.state.promo}
+                placeholder="Enter Code Here"
+                onChange={this.handleChange}
+              />
               <Link to={`/users/${this.props.userId}/orderConfirmation`}>
                 <button type="submit" className="btn btn-success" >Checkout</button>
               </Link>
