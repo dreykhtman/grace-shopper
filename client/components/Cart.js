@@ -39,12 +39,15 @@ export class Cart extends Component {
         acc += (price * qty)
         return acc;
       }, 0).toFixed(2);
-    return pCode === 'coreysbday' ? (total / 2).toFixed(2) : total;
+    return pCode === 'COREYSBDAY' ? (total / 2).toFixed(2) : total;
   }
 
   promo(e) {
     let pCode = e.target.value;
     this.setState({promo: pCode});
+    if (pCode === 'COREYSBDAY') {
+      alert('50% discount! For real!');
+    }
   }
 
   onQtChange(event) {
