@@ -31,41 +31,41 @@ const users = usersBasic.map(user => {
 
 //Remember to render products with a stock of 0 as "Out of stock"
 const products = [
-  { name: 'Air guitar', description: 'Lightweight instrument of the imagination', price: 199.99, stock: 3, imageUrl: 'https://images.8tracks.com/cover/i/000/493/172/1342757372-imglargephotoairguitar1-9129.jpg?rect=0,37,424,424&q=98&fm=jpg&fit=max&w=320&h=320', category: 'Instruments'},
-  { name: 'FF wig', description: 'Fiery and fancy wig', price: 99.99, stock: 5, imageUrl: 'https://i.pinimg.com/736x/ca/93/80/ca9380f90a855e1d6b69558013bca960--red-wigs-costume-wigs.jpg', category: 'Wigs'},
+  { name: 'Air guitar', description: 'Lightweight instrument of the imagination', price: 199.99, stock: 5, imageUrl: 'https://images.8tracks.com/cover/i/000/493/172/1342757372-imglargephotoairguitar1-9129.jpg?rect=0,37,424,424&q=98&fm=jpg&fit=max&w=320&h=320', category: 'Instruments'},
+  { name: 'FF wig', description: 'Fiery and fancy wig', price: 99.99, stock: 15, imageUrl: 'https://i.pinimg.com/736x/ca/93/80/ca9380f90a855e1d6b69558013bca960--red-wigs-costume-wigs.jpg', category: 'Wigs'},
   { name: 'Ultros', description: 'Demonic octopus', price: 999.99, stock: 0, imageUrl: 'http://www.creativeuncut.com/gallery-18/art/ff13-2-ultros.jpg', category: 'Live Exotic Creatures'},
-  { name: 'Ultraball', description: 'Advanced pokeball for catching special pokemons', price: 29.99, stock: 10, imageUrl: 'https://i5.walmartimages.com/asr/240ed451-66e8-48f6-bda2-aa63d16108ff_1.1a50b5d9b27de5bbe30ae8b25b52eb58.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff', category: 'Toys'},
+  { name: 'Ultraball', description: 'Advanced pokeball for catching special pokemons', price: 29.99, stock: 100, imageUrl: 'https://i5.walmartimages.com/asr/240ed451-66e8-48f6-bda2-aa63d16108ff_1.1a50b5d9b27de5bbe30ae8b25b52eb58.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff', category: 'Toys'},
   { name: 'Banjo', description: 'The banjo is a four-, five- or six-stringed instrument with a thin membrane stretched over a frame or cavity as a resonator, called the head.', price: 105.99, stock: 10, imageUrl: 'https://banjo.com/wp-content/uploads/2016/02/deering-artisan-goodtime-2.jpg', category: 'Instruments'},
-  { name: 'Disco Mullet Wig', description: '100% Polyester', price: 80.00, stock: 73, imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/81Z86w2DIZL._UY879_.jpg', category: 'Wigs'},
+  { name: 'Disco Mullet Wig', description: '100% Polyester', price: 80.00, stock: 63, imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/81Z86w2DIZL._UY879_.jpg', category: 'Wigs'},
   { name: 'Chocobo', description: 'The creature is generally a flightless bird, though certain highly specialized breeds in some titles retain the ability to fly.', price: 8996.99, stock: 3, imageUrl: 'http://vignette1.wikia.nocookie.net/finalfantasy/images/f/fc/CT_Chocobo.png/revision/latest?cb=20151127205658', category: 'Live Exotic Creatures'},
   { name: 'Voltron: Defender of the Universe', description: 'Voltron, defender of the universe returns! the single best-selling character in the history of the chogokin series is back with amazing posability and, of course, the ability to break down into five Lions. Also includes an optional screaming face to replicate battle scenes! the 270mm tall die cast figure comprises the red Lion, green Lion, blue Lion, yellow Lion, and black Lion, and accessories include the large sword and twin smaller swords plus a variety of other weapons. Includes a stand. Packaging for Western markets comes with a special sleeve that features a larger Voltron logo, while the package underneath features the go Lion logo more recognizable in asian markets.', price: 660.99, stock: 7, imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/81YsPDvUgrL._SL1500_.jpg', category: 'Toys'},
   { name: 'Drums', description: 'Pearl Masterworks 9-piece Stadium Exotic Shell Pack - Sunburst over Flame Maple', price: 13151.00, stock: 5, imageUrl: 'https://media.sweetwater.com/api/i/f-webp__q-82__ha-75a262158a1eb90f__hmac-538510b69ada36ae2d8a8fc0d52e40b29c89585e/images/items/750/MW922N-SFM-large.jpg', category: 'Instruments'},
-  { name: 'Wig', description: 'Why do we sell this?', price: 9.99, stock: 754, imageUrl: 'http://www.feeling-flirtatious.co.uk/images/blackmale.jpg', category: 'Wigs'},
+  { name: 'Wig', description: 'Why do we sell this?', price: 9.99, stock: 74, imageUrl: 'http://www.feeling-flirtatious.co.uk/images/blackmale.jpg', category: 'Wigs'},
   { name: 'Cactuar', description: 'Cactuars are little cacti, typically depicted having stiff arms and legs, three black holes for their faces, representing two eyes and an oblong mouth, and three reddish quills at the top of their heads.', price: 100.00, stock: 5, imageUrl: 'http://vignette2.wikia.nocookie.net/finalfantasy/images/5/52/FF8_Cactuar.png/revision/latest?cb=20120506170218', category: 'Live Exotic Creatures'},
   { name: 'Transformers Alternators - Chevrolet Corvette', description: 'Includes Gun', price: 45.99, stock: 10, imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51ABFvAaJTL.jpg', category: 'Toys'}
 ]
 
 const orders = [
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 1},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 2},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 3},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 4},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 5},
-  {placed: false, userId: 5},
-  {placed: false, userId: 6},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), subtotal: 199.99 * 2, userId: 1},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), subtotal: (99.99 * 3).toFixed(2), userId: 2},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), subtotal: 999.99, userId: 3},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), subtotal: 29.99 * 10, userId: 4},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), subtotal: 999.99, userId: 5},
+  {placed: false, subtotal: null, userId: 5},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), subtotal: (29.99 * 5 + 999.99).toFixed(2), userId: 6}
 ]
 
 const orderedProducts = [
-  {quantity: 2, purchasePrice: 199.99 * 2, orderId: 1, productId: 1},
-  {quantity: 3, purchasePrice: (99.99 * 3).toFixed(2), orderId: 2, productId: 2},
+  {quantity: 2, purchasePrice: 199.99, orderId: 1, productId: 1},
+  {quantity: 3, purchasePrice: 99.99, orderId: 2, productId: 2},
   {quantity: 1, purchasePrice: 999.99, orderId: 3, productId: 3},
-  {quantity: 10, purchasePrice: 29.99 * 10, orderId: 4, productId: 4},
+  {quantity: 10, purchasePrice: 29.99, orderId: 4, productId: 4},
   {quantity: 1, purchasePrice: 999.99, orderId: 5, productId: 3},
   {quantity: 1, purchasePrice: null, orderId: 6, productId: 1},
   {quantity: 1, purchasePrice: null, orderId: 6, productId: 2},
   {quantity: 3, purchasePrice: null, orderId: 6, productId: 4},
-  {quantity: 1, purchasePrice: null, orderId: 7, productId: 3},
-  {quantity: 5, purchasePrice: null, orderId: 7, productId: 4}
+  {quantity: 1, purchasePrice: 999.99, orderId: 7, productId: 3},
+  {quantity: 5, purchasePrice: 29.99, orderId: 7, productId: 4}
 ]
 
 const reviews = [

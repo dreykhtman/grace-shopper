@@ -19,27 +19,27 @@ router.get('/orders', (req, res, next) => {
 });
 
 router.param('orderId', (req, res, next, id) => {
-  Order.findById(id, {
+  Order.findById(+id, {
     include: { all: true }
   })
-    .then(order => {
-      if (req.user && (order.userId === id || req.user.isAdmin)) {
-        req.order = order;
-        next();
-      } else { res.send('Permission denied, you can only view your own orders, users will be flagged upon requesting other orders.') }
-    })
-    .catch(err => console.error(err))
+  .then(order => {
+    if (req.user && (order.id === +id || req.user.isAdmin)) {
+      req.order = order;
+      next();
+    } else { res.send('Permission denied, you can only view your own orders, users will be flagged upon requesting other orders.') }
+  })
+  .catch(err => console.error(err))
 })
 router.route('/:userId/orders/:orderId')
 .get((req, res, next) => res.json(req.order))
 .put((req, res, next) => {
-  req.order.update({
-    placed: req.body.placed,
+  return req.order.update({
+    placed: req.body.placed ? req.body.placed : req.order.placed,
     timePlaced: req.body.timePlaced,
     shippedDate: req.body.shippedDate,
-    deliveryDate: req.body.deliveryDate
+    subtotal: req.body.subtotal
   })
-    .then(updated => res.json(updated))
+  .then(updated => res.json(updated))
 })
 .delete((req, res, next) => {
   req.order.destroy()

@@ -80,17 +80,17 @@ export class Cart extends Component {
 
     let placed = !order.placed ? true : false;
     const timePlaced = Date.now();
-
     const shipDate = new Date;
     const daysTillShip = 3;
     const shippedDate = shipDate.setDate(shipDate.getDate() + daysTillShip);
+    let subtotal = this.calcSubtotal();
 
-    const orderToUpdate = Object.assign({}, {placed, timePlaced, shippedDate});
+    const orderToUpdate = Object.assign({}, {placed, timePlaced, shippedDate, subtotal});
     console.log('handling checkout, orderToUpdate:', orderToUpdate);
 
     axios.put(`/api/users/${this.props.userId}/orders/${orderId}`, orderToUpdate)
     .then(res => res.data)
-    .then( () => { window.location.href = `/users/${this.props.user}/orderConfirmation`; } )
+    .then( () => { window.location.href = `/users/${this.props.userId}/orderConfirmation`; } )
   }
 
   render() {

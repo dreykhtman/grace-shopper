@@ -12,6 +12,10 @@ const Order = db.define('order', {
     },
     shippedDate: {
         type: Sequelize.DATE
+    },
+    subtotal: {
+      type: Sequelize.FLOAT,
+      defaultValue: null
     }
  });
 

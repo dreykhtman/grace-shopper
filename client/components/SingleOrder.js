@@ -37,10 +37,9 @@ export class SingleOrder extends Component {
     let state = this.state;
     let order = this.props.singleOrder;
     const editId = this.props.match.params.orderId;
-    let placed = state.placed ? state.placed : order.placed;
     let timePlaced = state.timePlaced ? state.timePlaced : order.timePlaced
     let shippedDate = state.shippedDate ? state.shippedDate : order.shippedDate
-    const orderToUpdate = Object.assign({}, {placed, timePlaced, shippedDate});
+    const orderToUpdate = Object.assign({}, {timePlaced, shippedDate});
 
     axios.put(`/api/users/${this.props.userId}/orders/${editId}`, orderToUpdate)
     .then(res => res.data)
@@ -97,11 +96,6 @@ export class SingleOrder extends Component {
           </div>)) : (
           <div className="col-md-4">
             <form className="thumbnail" onChange={this.handleChange} >
-              <label>Order Placed:</label>
-              <select name="placed">
-                <option value={order.placed}>{`${order.placed}`}</option>
-                <option value={!order.placed}>{`${!order.placed}`}</option>
-              </select>
               <label>Time Placed:</label>
               <input type="text" name="timePlaced" placeholder={order.timePlaced ? `${order.timePlaced}` : 'null'} />
               <label>Ship Date:</label>
@@ -109,7 +103,7 @@ export class SingleOrder extends Component {
               <label>Delivery Date:</label>
               <input type="text" name="deliveryDate" placeholder={order.deliveryDate ? `${order.deliveryDate}` : 'null'} />
               <button type="submit" className="btn btn-warning" onClick={this.handleEditSubmit}>Submit Edit</button>
-              <button className="btn btn-danger" onClick={this.handleDelete}>Cancel Order</button>
+              <button className="btn btn-danger" onClick={this.handleDelete}disabled={order.placed}>Cancel Order</button>
             </form>
           </div>) }
 
