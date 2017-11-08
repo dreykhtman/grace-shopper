@@ -14,13 +14,15 @@ export default class SearchProducts extends Component {
     }
     render () {
         return (
-            <form id="search">
-              <input type="text" onChange ={this.handleChange} placeholder="Search" params={{ products: this.props.products, searchInput: this.state.searchInput }} />
-              <Link to={{pathname: '/search', state: { input: this.state.searchInput, products: this.props.products}}} title="Search">
-                <button>
-                  <i className="material-icons">search</i>
-                </button>
-              </Link>
+            <form className="navbar-form navbar-left" id="search">
+                <div className="form-group">
+                    <input type="text" className="form-control" onChange ={this.handleChange} placeholder="Search" params={{ products: this.props.products, searchInput: this.state.searchInput }} />
+                </div>
+                    <Link to={{pathname: '/search', state: { input: this.state.searchInput, products: this.props.products}}} title="Search">
+                        <button className="btn btn-outline-secondary">
+                            <i className="material-icons">search</i>
+                        </button>
+                    </Link>
             </form>
         )
     }

@@ -6,14 +6,14 @@ const Category = (props) => {
   const { products, category } = props;
 
   return (
-    <div id="category" className="col-md-3">
+    <div>
       <Link to={`/products/category/${category}`}><h3>{category}</h3></Link>
       {
         products && products.filter(product => {
           return product.category === category
         }).map(prod => (
           <div key={prod.id}>
-            <SingleProductCard product={prod} />
+            <SingleProductCard className="product-card" product={prod} />
           </div>
         ))
       }

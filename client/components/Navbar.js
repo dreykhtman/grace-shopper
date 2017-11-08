@@ -11,49 +11,50 @@ export const Navbar = (props) => {
 
   return (
     <div>
-    <header >
-      <nav>
-        <div>
-          <Link to="/" title="Home">
-            <img id="logo" src="https://ultros.io/static/images/fanart/rakiru_1.png" alt="Store logo" height="100em" width="auto" />
-          </Link>
-        </div>
-        <div id="nav-features">
+      <nav className="navbar navbar-default">
+        <div className="container-fluid">
+          {/*logo*/}
+          <div className="navbar-header">
+            <Link to="/" title="Home">
+              <img id="logo" src="https://ultros.io/static/images/fanart/rakiru_1.png" alt="Store logo" />
+            </Link>
+          </div>
+          {/*search input*/}
           <div>
             <SearchProducts products={props.allProducts} />
           </div>
-          <div>
-            <Link to={`/users/${props.userId}/cart`} title="Cart">
-            <button id="cart">
+          
+          <Link to={`/users/${props.userId}/cart`} title="Cart">
+            <button className="btn btn-outline-secondary navbar-btn" id="cart">
               <i className="material-icons">shopping_cart</i>
             </button>
-            </Link>
-          </div>
+          </Link>
+          
           {
             isLoggedIn
               ? <div>
                 {/* The navbar will show these links after you log in
                 Have to add account button when logged in as well*/}
-                <a href="#" onClick={handleClick}>Logout</a>
-                <Link to="/account">My Account</Link>
+                <a className="btn btn-outline-secondary navbar-btn" href="#" onClick={handleClick}>Logout</a>
+                <Link className="btn btn-outline-secondary navbar-btn" to="/account">My Account</Link>
               </div>
               : <div>
                 {/* The navbar will show these links before you log in */}
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
+                <Link className="btn btn-outline-secondary navbar-btn" to="/login">Login</Link>
+                <Link className="btn btn-outline-secondary navbar-btn" to="/signup">Sign Up</Link>
               </div>
           }
           {
             isAdmin
               ? <div>
-                <Link to="/users">Users</Link>
+                <Link className="btn btn-outline-secondary navbar-btn" to="/users">Users</Link>
               </div>
               :
               <div />
           }
-        </div>
+        
+        </div> {/* end container fluid*/}
       </nav>
-    </header>
     <hr />
     </div>
   )

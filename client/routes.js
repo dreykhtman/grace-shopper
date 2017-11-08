@@ -30,6 +30,7 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Navbar />
+            <div className="main-container">
             <Switch>
               {/* Routes placed here are available to all visitors */}
               {/* <Redirect from="/" to="/home" /> */}
@@ -64,6 +65,7 @@ class Routes extends Component {
               }
               {/* Displays our Login component as a fallback */}
             </Switch>
+            </div>
           <Footer />
         </Main>
       </Router>
