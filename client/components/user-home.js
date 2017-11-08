@@ -17,15 +17,15 @@ export const UserHome = (props) => {
   let cats = Object.keys(byCat)
 
   return (
-    <div>
-      <div>
+    <div className="container-fluid col">
+      <div className="row">
         <h3>Welcome, {name || 'Guest'}</h3>
       </div>
       {/* <div className="container"> */}
         <div className="row">
           {
             cats && cats.map((cat, i) => (
-              <Category key={i} products={allProds} category={cat} />
+              <Category className="container-fluid col-md-3" key={i} products={allProds} category={cat} />
             ))
           }
         </div>

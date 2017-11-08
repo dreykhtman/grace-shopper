@@ -8,7 +8,7 @@ import {logout} from '../store';
 export const Footer = (props) => {
   const {isLoggedIn} = props
   return (
-    <footer >
+    <footer className="footer">
     <hr />
       <div id="footer-btns">
         { isLoggedIn ? <div id="order-btn">
