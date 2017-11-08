@@ -12,9 +12,6 @@ const Order = db.define('order', {
     },
     shippedDate: {
         type: Sequelize.DATE
-    },
-    deliveryDate: {
-        type: Sequelize.DATE
     }
  });
 

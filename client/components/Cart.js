@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
+
 
 export class Cart extends Component {
 
@@ -56,6 +58,15 @@ export class Cart extends Component {
               )
             })
           }
+          <div style={{marginTop: '33px'}}>
+            <form>
+              <label>Promotion Code:</label>
+              <input type="text" placeholder="Enter Code Here" />
+              <Link to={`/users/${this.props.userId}/orderConfirmation`}>
+                <button type="submit" className="btn btn-success" >Checkout</button>
+              </Link>
+            </form>
+          </div>
         </ul>
       </div>
     )
@@ -66,6 +77,7 @@ export class Cart extends Component {
 const mapStateToProps = function (state) {
   return {
     cart: state.orders.cart,
+    userId: state.user.id
   };
 };
 

@@ -48,14 +48,15 @@ export class SingleOrder extends Component {
     .then(res => res.data)
     .then(updatedOrder => {
       console.log(`Updated: ${updatedOrder}`);
+      window.location.reload();
     })
-    window.location.reload();
   }
   handleDelete(e) {
     const deleteId = this.props.match.params.orderId;
     axios.delete(`/api/users/${this.props.userId}/orders/${deleteId}`)
     .then(res => res.data)
-    .then( () => this.props.history.goBack())
+    .then(() => { window.location.href = `/users/${this.props.user}/orders`; })
+    //.then( () => this.props.history.goBack())
   }
 
   render () {
@@ -93,13 +94,6 @@ export class SingleOrder extends Component {
                       <li>{`Date: ${order.shippedDate.slice(0, 10)}`}</li>
                       <li>{`Time: ${order.shippedDate.slice(11, 19)}`}</li>
                     </ul>) : ' null' }
-                </li>
-                <li> Delivery Date:
-                  { order.deliveryDate ?
-                  (<ul>
-                    <li>{`Date: ${order.deliveryDate.slice(0, 10)}`}</li>
-                    <li>{`Time: ${order.deliveryDate.slice(11, 19)}`}</li>
-                  </ul>) : ' null' }
                 </li>
               </ul>
               <button className="btn btn-warning" onClick={this.handleEdit}>Edit Order</button>
@@ -155,13 +149,6 @@ export class SingleOrder extends Component {
                     <td className="total-price">{(prod.floatPrice * prod.products_in_order.quantity).toFixed(2)}</td>
                   </tr>
                 )) }
-                <tr>
-                  <td>{''}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>{'Need fnc for total$ of order!'}</td>
-                </tr>
               </tbody>
             </table>
           </div>

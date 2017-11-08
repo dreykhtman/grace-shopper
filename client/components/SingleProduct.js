@@ -51,7 +51,7 @@ export class SingleProduct extends Component {
       userId: this.setId()
     })
       .then(res => res.data)
-      .then(() => { window.location.href = '/cart'; })
+      .then(() => { window.location.href = `/users/${this.props.user}/cart`; })
   }
 
   render() {

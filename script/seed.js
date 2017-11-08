@@ -86,11 +86,11 @@ const products = [
 ]
 
 const orders = [
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 1},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 2},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 3},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 4},
-  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), deliveryDate: Date.now(), userId: 5},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 1},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 2},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 3},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 4},
+  {placed: true, timePlaced: Date.now(), shippedDate: Date.now(), userId: 5},
   {placed: false, userId: 5},
   {placed: false, userId: 6},
 ]

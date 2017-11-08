@@ -8,7 +8,7 @@ import Category from './Category';
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const { email } = props
+  const { name } = props
   const allProds = props.products;
   let byCat = allProds.reduce((acc, curr) => {
     acc[curr.category] = acc[curr.category] ? null : [curr];
@@ -19,7 +19,7 @@ export const UserHome = (props) => {
   return (
     <div>
       <div>
-        <h3>Welcome, {email || 'Guest'}</h3>
+        <h3>Welcome, {name || 'Guest'}</h3>
       </div>
       {/* <div className="container"> */}
         <div className="row">
@@ -40,6 +40,7 @@ export const UserHome = (props) => {
 const mapState = (state) => {
   return {
     email: state.user.email,
+    name: state.user.name,
     products: state.products.allProducts
   }
 }
