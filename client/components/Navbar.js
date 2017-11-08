@@ -7,6 +7,7 @@ import {logout} from '../store';
 
 export const Navbar = (props) => {
   const { handleClick, isLoggedIn, isAdmin } = props;
+
   return (
     <div>
     <header >
@@ -28,7 +29,7 @@ export const Navbar = (props) => {
             </form>
           </div>
           <div>
-            <Link to="/cart" title="Cart">
+            <Link to={`/users/${props.userId}/cart`} title="Cart">
             <button id="cart">
               <i className="material-icons">shopping_cart</i>
             </button>
@@ -69,17 +70,26 @@ export const Navbar = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    isAdmin: !!state.user.isAdmin
+    isAdmin: !!state.user.isAdmin,
+    userId: state.user.id,
+    user: state.user
   }
 }
 
-const mapDispatch = (dispatch) => {
-  return {
-    handleClick () {
-      dispatch(logout())
-    }
-  }
-}
+// const mapDispatch = (dispatch) => {
+//   return {
+//     handleClick () {
+//       dispatch(logout())
+//     }
+//   }
+// }
+const mapDispatch = dispatch => ({
+  // onQtChange: (evt) => {},
+  handleClick: () => dispatch(logout())
+  // getCart: (userId) => {
+  //   dispatch(fetchCart(userId))
+  // }
+})
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes

@@ -14,7 +14,8 @@ const GET_CART = 'GET_CART'
  */
 const initialState = {
   allOrders: [],
-  singleOrder: {}
+  singleOrder: {},
+  cart: {}
 }
 
 /**
@@ -28,38 +29,41 @@ const getCart = cart => ({type: GET_CART, cart})
 /**
  * THUNK CREATORS
  */
-export const fetchOrders = () =>
+export const fetchOrders = (userId) =>
   dispatch =>
-    axios.get('/api/orders')
+    axios.get(`/api/users/${userId}/orders`)
       .then(res => res.data)
       .then(orders => dispatch(getOrders(orders)))
       .catch(err => console.log(err))
 
-export const fetchSingleOrder = (orderId) =>
+export const fetchSingleOrder = (orderId, userId) =>
   dispatch =>
-    axios.get(`/api/orders/${orderId}`)
+    axios.get(`/api/users/${userId}/orders/${orderId}`)
       .then(res => res.data)
       .then(order => dispatch(getOrder(order)))
       .catch(err => console.log(err))
 
-export const fetchCart = (orderId) =>
-  dispatch =>
-    axios.get(`/api/orders/${orderId}/cart`)
+export const fetchCart = (userId) =>
+  dispatch => {
+    axios.get(`/api/users/${userId}/cart`)
       .then(res => res.data)
-      .then(cart => dispatch(getCart(cart)))
+      .then(cart => {
+        console.log('The cart...', cart)
+        dispatch(getCart(cart))
+      })
       .catch(err => console.log(err))
-
+    }
 /**
  * REDUCER
  */
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ORDERS:
-      return Object.assign({}, { allOrders: action.orders })
+      return Object.assign({}, state, { allOrders: action.orders })
     case GET_ORDER:
-      return Object.assign({}, { singleOrder: action.order })
+      return Object.assign({}, state, { singleOrder: action.order })
     case GET_CART:
-      return Object.assign({}, { cart: action.cart })
+      return Object.assign({}, state, { cart: action.cart })
     // case REMOVE_ORDER:
     //   return initialState...
     default:

@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCart } from '../store';
 
 export class Cart extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      cart: []
-    }
+  constructor() {
+    super();
+    // this.state = {
+    //   cart: []
+    // }
     this.onQtChange = this.onQtChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.getCart()
   }
 
   onQtChange(event) {
@@ -22,14 +17,18 @@ export class Cart extends Component {
 
   render() {
     const cart = this.props.cart;
+    if (!cart) return null;
+    const orders = cart.orders;
+    if (!orders) return null;
+    const cartReady = orders[0].products;
 
-    console.log(this.state)
+    console.log('PROPS:', this.props, 'CART:', cart, 'cartReady:', cartReady)
     return (
       <div>
         <h1>Your Shopping Cart</h1>
         <ul>
           {
-            cart && cart.products.map(product => {
+            cartReady && cartReady.map(product => {
               return (
                 <div key={product.name}>
                   <li >
@@ -66,13 +65,8 @@ export class Cart extends Component {
 
 const mapStateToProps = function (state) {
   return {
-    cart: state.cart
+    cart: state.orders.cart,
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-   // onQtChange: (evt) => {},
-   getCart: () => dispatch(fetchCart())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps)(Cart);
