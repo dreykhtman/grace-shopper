@@ -52,7 +52,7 @@ export class AccountPage extends Component {
                                             )
                                         })
                                     }
-                                    <h4>Order Subtotal Goes Here</h4>
+                                    <h4>Subtotal: ${pastOrder.subtotal}</h4>
                                     {
                                         pastOrder.deliveryDate
                                         ? <div>
@@ -62,14 +62,14 @@ export class AccountPage extends Component {
                                         {
                                             pastOrder.shippedDate
                                             ? <div>
-                                                <h5>{`Status: Shipped on ${pastOrder.shippedDate.slice(0, 10)}`}</h5>
+                                                <h5>{`Status: Shipping Date: ${pastOrder.shippedDate.slice(0, 10)}`}</h5>
                                             </div>
                                             : <div>
                                                 <h5>{`Status: Your order is being processed.`}</h5>
                                             </div>
                                         }
                                         </div>
-                                        
+
                                     }
                                 </div>
                             )

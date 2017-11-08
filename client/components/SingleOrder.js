@@ -10,14 +10,13 @@ export class SingleOrder extends Component {
     this.state = {edit: false, placed: '', timePlaced: '', shippedDate: '', deliveryDate: ''};
     this.handleEdit = this.handleEdit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEditSubmit = this.handleEditSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount () {
     this.findId.bind(this);
     this.props.loadOrder(this.findId(), +this.props.userId)
-    console.log('this.props', this.props);
   }
 
   findId() {
@@ -33,21 +32,18 @@ export class SingleOrder extends Component {
     const val = e.target.value;
     this.setState({ [name]: val })
   }
-  handleSubmit(e) {
+  handleEditSubmit(e) {
     e.preventDefault();
     let state = this.state;
     let order = this.props.singleOrder;
     const editId = this.props.match.params.orderId;
-    let placed = state.placed ? Boolean(state.placed) : Boolean(order.placed)
     let timePlaced = state.timePlaced ? state.timePlaced : order.timePlaced
     let shippedDate = state.shippedDate ? state.shippedDate : order.shippedDate
-    let deliveryDate = state.deliveryDate ? state.deliveryDate : order.deliveryDate
-    const orderToUpdate = Object.assign({}, {placed, timePlaced, shippedDate, deliveryDate});
+    const orderToUpdate = Object.assign({}, {timePlaced, shippedDate});
 
     axios.put(`/api/users/${this.props.userId}/orders/${editId}`, orderToUpdate)
     .then(res => res.data)
     .then(updatedOrder => {
-      console.log(`Updated: ${updatedOrder}`);
       window.location.reload();
     })
   }
@@ -56,7 +52,6 @@ export class SingleOrder extends Component {
     axios.delete(`/api/users/${this.props.userId}/orders/${deleteId}`)
     .then(res => res.data)
     .then(() => { window.location.href = `/users/${this.props.user}/orders`; })
-    //.then( () => this.props.history.goBack())
   }
 
   render () {
@@ -100,20 +95,15 @@ export class SingleOrder extends Component {
             </div>
           </div>)) : (
           <div className="col-md-4">
-            <form className="thumbnail" onChange={this.handleChange} onSubmit={this.handleSubmit}>
-              <label>Order Placed:</label>
-              <select name="placed">
-                <option>{`${order.placed}`}</option>
-                <option>{`${!order.placed}`}</option>
-              </select>
+            <form className="thumbnail" onChange={this.handleChange} >
               <label>Time Placed:</label>
               <input type="text" name="timePlaced" placeholder={order.timePlaced ? `${order.timePlaced}` : 'null'} />
               <label>Ship Date:</label>
               <input type="text" name="shippedDate" placeholder={order.shippedDate ? `${order.shippedDate}` : 'null'} />
               <label>Delivery Date:</label>
               <input type="text" name="deliveryDate" placeholder={order.deliveryDate ? `${order.deliveryDate}` : 'null'} />
-              <button type="submit" className="btn btn-warning">Submit Edit</button>
-              <button className="btn btn-danger" onClick={this.handleDelete}>Cancel Order</button>
+              <button type="submit" className="btn btn-warning" onClick={this.handleEditSubmit}>Submit Edit</button>
+              <button className="btn btn-danger" onClick={this.handleDelete}disabled={order.placed}>Cancel Order</button>
             </form>
           </div>) }
 
@@ -167,4 +157,3 @@ const mapState = state => {
 const mapDispatch = dispatch => ({ loadOrder: (ID, userId) => dispatch(fetchSingleOrder(ID, userId)) })
 
 export default connect(mapState, mapDispatch)(SingleOrder)
-//export default connect(mapState)(SingleOrder)

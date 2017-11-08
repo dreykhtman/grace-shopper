@@ -50,7 +50,7 @@ class Routes extends Component {
                   <Switch>
                     {/* Routes placed here are only available after logging in */}
                     <Route path="/users/:userId/orders/:orderId" component={SingleOrder} />
-                    <Route path="/users/:userId/orders" component={Orders} />
+                    <Route exact path="/users/:userId/orders" component={Orders} />
                     <Route exact path="/users/:userId/cart" component={Cart} />
                     <Route exact path="/users/:userId/orderConfirmation" component={OrderConfirmation} />
                     <Route path="/account" component={AccountPage} />
@@ -64,10 +64,6 @@ class Routes extends Component {
                   </Switch>
               }
               {/* Displays our Login component as a fallback */}
-              {
-                //Removing from homepage until we populate home page based off user being logged in or not.
-                //<Route component={Login} />
-              }
             </Switch>
             </div>
           <Footer />
@@ -89,17 +85,6 @@ const mapState = (state) => {
     user: state.user
   }
 }
-
-// const mapDispatch = (dispatch) => {
-//   return {
-//     loadInitialData (userId) {
-//       dispatch(me())
-//       dispatch(fetchProducts())
-//       dispatch(fetchAllUsers())
-//       //dispatch(fetchCart(userId))
-//     }
-//   }
-// }
 
 const mapDispatch = dispatch => ({
   loadInitialData: () => {

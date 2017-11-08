@@ -3,7 +3,6 @@ const { Product, Review, Products_in_order, Order } = require('../db/models')
 module.exports = router
 
 router.param('productId', (req, res, next, id) => {
-  //const id = +req.params.productId;
   Product.findById(id, {
     include: { model: Review }
   })
@@ -12,6 +11,43 @@ router.param('productId', (req, res, next, id) => {
       next();
     })
     .catch(err => console.error(err))
+})
+
+router.route('/:productId/cart')
+.post((req, res, next) => {
+  if (req.user) {
+    Order.findOrCreate({
+      where: {
+        userId: +req.body.userId,
+        placed: false
+      }
+    })
+    .spread((order, created) => {
+      return Products_in_order.create({
+        quantity: req.body.quantity,
+        purchasePrice: req.body.price,
+        productId: req.body.productId,
+        orderId: order.id
+      })
+    })
+    .then(created => res.json(`Created order: ${created}`))
+    .catch(next);
+  }
+})
+.put( (req, res, next) => {
+  if (req.user) {
+    Products_in_order.findOne({
+      where: { orderId: +req.body.orderId, productId: req.body.productId}
+    })
+    .then(prodInOrder => prodInOrder.update({quantity: req.body.quantity}))
+    .then(updated => console.log(`Updated order: ${updated}`))
+  }
+})
+.delete((req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    req.product.destroy()
+      .then(() => res.json(`Successfully deleted order`))
+  } else { res.status(401).send('Must be an admin to delete order.') }
 })
 
 //.all before requests will find by id and attach to the req
@@ -25,13 +61,9 @@ router.route('/:productId/reviews/:reviewId')
       .catch(err => console.error(err))
   })
   .get((req, res, next) => {
-    // Review.findById(+req.params.reviewId)
-    // .then(review => res.json(review))
     res.json(req.review);
   })
   .put((req, res, next) => {
-    // Review.findById(+req.params.reviewId)
-    // .then(review => {
     if (req.user && (req.user.id === req.review.userId || req.user.isAdmin)) {
       req.review.update({
         text: req.body.text,
@@ -43,8 +75,6 @@ router.route('/:productId/reviews/:reviewId')
     }
   })
   .delete((req, res, next) => {
-    // Review.findById(+req.params.reviewId)
-    // .then(review => {
     if (req.user && (req.user.id === req.review.userId || req.user.isAdmin)) {
       req.review.destroy()
         .then(() => res.json(`Succesfully deleted`))
@@ -115,49 +145,3 @@ router.route('/')
         .catch(next);
     } else { res.status(401).send('Must be an admin to post product.') }
   })
-
-router.route('/:productId/cart')
-  // .get((req, res, next) => {
-  //   res.json(req.product)
-  // })
-  .post((req, res, next) => {
-    if (req.user) {
-      Order.findOrCreate({
-        where: {
-          userId: +req.body.userId,
-          placed: false
-        }
-      })
-        .spread((order, created) => {
-          return Products_in_order.create({
-            quantity: req.body.quantity,
-            purchasePrice: req.body.price,
-            productId: req.body.productId,
-            orderId: order.id
-          })
-        })
-        .then(created => res.json(`Created order: ${created}`))
-        .catch(next);
-    }
-  })
-  .delete((req, res, next) => {
-    if (req.user && req.user.isAdmin) {
-      req.product.destroy()
-        .then(() => res.json(`Successfully deleted order`))
-    } else { res.status(401).send('Must be an admin to delete order.') }
-  })
-
-
-// If time permits we'll separate more...
-// router.get('/category/:categoryName', (req, res, next) => {
-//   Product.findAll({
-//     where: {
-//       category: req.params.categoryName
-//     }
-//   })
-//   .then(products => {
-//     console.log('prods by cats:', products);
-//     res.json(products);
-//   })
-//   .catch(next)
-// });
