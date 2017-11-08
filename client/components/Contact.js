@@ -5,6 +5,7 @@ export const Contact = () => {
     <div>
       <h2>Contact Information</h2>
       <p>Please contact Ultros if you come across any problems while using our site!</p>
+      <p>Call for all Returns & Exchanges</p>
       <h4>Phone Number:</h4>
       <p>(212) 555 - 5969</p>
       <h4>E-mail:</h4>

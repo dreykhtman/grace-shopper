@@ -17,7 +17,7 @@ export class AllUsers extends Component {
         users && users.length && users.map(user => {
           return (
             <div key={user.id}>
-              <h2>{user.name}</h2>
+              <h2>{user.email}</h2>
               <Link to={`/users/${user.id}`}>
                 <button className="btn btn-warning">Edit</button>
               </Link>

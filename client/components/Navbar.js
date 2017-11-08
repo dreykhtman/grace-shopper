@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {logout} from '../store';
+import { SearchProducts } from './';
 
 
 export const Navbar = (props) => {
@@ -19,14 +20,7 @@ export const Navbar = (props) => {
         </div>
         <div id="nav-features">
           <div>
-            <form id="search">
-              <input type="text" placeholder="Search" />
-              <Link to="/search" title="Search">
-                <button>
-                  <i className="material-icons">search</i>
-                </button>
-              </Link>
-            </form>
+            <SearchProducts products={props.allProducts} />
           </div>
           <div>
             <Link to={`/users/${props.userId}/cart`} title="Cart">
@@ -41,6 +35,7 @@ export const Navbar = (props) => {
                 {/* The navbar will show these links after you log in
                 Have to add account button when logged in as well*/}
                 <a href="#" onClick={handleClick}>Logout</a>
+                <Link to="/account">My Account</Link>
               </div>
               : <div>
                 {/* The navbar will show these links before you log in */}
@@ -72,7 +67,8 @@ const mapState = (state) => {
     isLoggedIn: !!state.user.id,
     isAdmin: !!state.user.isAdmin,
     userId: state.user.id,
-    user: state.user
+    user: state.user,
+    allProducts: state.products.allProducts
   }
 }
 

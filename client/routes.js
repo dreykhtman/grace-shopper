@@ -4,7 +4,7 @@ import {Router, Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder, AllUsers, EditUserForm} from './components'
+import {Main, Login, Signup, UserHome, AllProducts, Navbar, Footer, Help, About, Contact, SingleProduct, Cart, Orders, SingleOrder, AllUsers, EditUserForm, FilteredProducts, AccountPage} from './components'
 import {me, fetchProducts, fetchCart, fetchAllUsers} from './store'
 
 
@@ -43,7 +43,7 @@ class Routes extends Component {
               <Route exact path="/products/category/:categoryName" component={AllProducts} />
               <Route exact path="/" component={UserHome} />
               <Route exact path="/home" component={UserHome} />
-              <Route path="/home" component={UserHome} />
+              <Route exact path="/search" component={FilteredProducts} />
               {
                 isLoggedIn &&
                   <Switch>
@@ -51,11 +51,12 @@ class Routes extends Component {
                     <Route path="/users/:userId/orders/:orderId" component={SingleOrder} />
                     <Route path="/users/:userId/orders" component={Orders} />
                     <Route exact path="/users/:userId/cart" component={Cart} />
+                    <Route path="/account" component={AccountPage} />
+                    <Route exact path="/users/:userId" component={EditUserForm} />
                     {
                       isAdmin &&
                       <Switch>
                         <Route exact path="/users" component={AllUsers} />
-                        <Route exact path="/users/:userId" component={EditUserForm} />
                       </Switch>
                     }
                   </Switch>

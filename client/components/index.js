@@ -18,3 +18,7 @@ export {default as SingleProduct} from './SingleProduct';
 export {default as AllUsers} from './AllUsers';
 export {default as EditUserForm} from './EditUserForm';
 export {default as Cart} from './Cart';
+export {default as SearchProducts} from './SearchProducts';
+export {SingleProductCard} from './SingleProductCard';
+export {FilteredProducts} from './FilteredProducts';
+export {default as AccountPage} from './AccountPage';
