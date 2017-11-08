@@ -5,7 +5,7 @@ import {fetchOrders} from '../store';
 
 export class Orders extends Component {
   componentDidMount () {
-    this.props.loadData()
+    this.props.loadData(+this.props.userId)
   }
 
   render () {
@@ -16,7 +16,7 @@ export class Orders extends Component {
         <div className="row">
           { orders && orders.map(order => (
             <div className="col-md-3" key={order.id}>
-                <Link to={`/orders/${order.id}`}>
+                <Link to={`/users/${this.props.userId}/orders/${order.id}`}>
                   <div className="thumbnail">
                     <ul>
                       <li> Order Id: {order.id} </li>
@@ -58,10 +58,10 @@ export class Orders extends Component {
  * CONTAINER
 */
 const mapState = state => {
-  return { allOrders: state.orders.allOrders }
+  return { allOrders: state.orders.allOrders, userId: state.user.id }
 }
 
-const mapDispatch = dispatch => ({ loadData: () => dispatch(fetchOrders()) })
+const mapDispatch = dispatch => ({ loadData: (id) => dispatch(fetchOrders(id)) })
 
 export default connect(mapState, mapDispatch)(Orders)
 //Orders.propTypes = {}

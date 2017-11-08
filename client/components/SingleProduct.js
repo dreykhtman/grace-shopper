@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { addToCart, fetchOrder } from '../store/cart';
 import store from '../store';
 
-export default class SingleProduct extends Component {
+export class SingleProduct extends Component {
   constructor() {
     super();
     this.state = {
       product: {},
       category: '',
-      quantity: 0
+      quantity: 0,
+      userId: null
     }
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.setId = this.setId.bind(this);
   }
 
   componentDidMount() {
@@ -33,9 +36,23 @@ export default class SingleProduct extends Component {
     this.setState({ quantity: event.target.value })
   }
 
-  // handleClick(event) {
-  //   console.log('hello')
-  // }
+  setId() {
+    return this.props.user
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+
+    const id = this.props.match.params.id;
+    axios.post(`/api/products/${id}/cart`, {
+      quantity: this.state.quantity,
+      price: this.state.product.price,
+      productId: this.state.product.id,
+      userId: this.setId()
+    })
+      .then(res => res.data)
+      .then(() => { window.location.href = '/cart'; })
+  }
 
   render() {
     const product = this.state.product;
@@ -82,9 +99,11 @@ export default class SingleProduct extends Component {
               </select>
             </form>
             <div className="card-block">
-              <Link to="/cart">
-                <button type="button" className="btn btn-secondary"><i className="material-icons">add_shopping_cart</i> Add to cart</button>
-              </Link>
+              <button
+                onClick={this.handleClick}
+                type="button" className="btn btn-secondary"
+                disabled={(!qtyArr.length || !this.state.quantity)}
+              ><i className="material-icons">add_shopping_cart</i> Add to cart</button>
             </div>
           </div>
         </div>
@@ -92,3 +111,11 @@ export default class SingleProduct extends Component {
     )
   }
 }
+
+const mapState = (state) => {
+  return {
+    user: state.user.id
+  }
+};
+
+export default connect(mapState)(SingleProduct)

@@ -14,7 +14,7 @@ export const Footer = (props) => {
         { isLoggedIn ? <div id="order-btn">
             {/* The footer will show these links after you log in
             Have to add account button when logged in as well*/}
-            <Link to="/orders">Orders</Link>
+            <Link to={`/users/${props.userId}/orders`}>Orders</Link>
           </div> : null }
         {/* The footer will show these links before you log in */}
         <div id="help-btn">
@@ -36,7 +36,8 @@ export const Footer = (props) => {
 */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 

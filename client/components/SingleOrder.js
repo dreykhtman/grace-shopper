@@ -16,7 +16,7 @@ export class SingleOrder extends Component {
 
   componentDidMount () {
     this.findId.bind(this);
-    this.props.loadOrder(this.findId())
+    this.props.loadOrder(this.findId(), +this.props.userId)
     console.log('this.props', this.props);
   }
 
@@ -44,7 +44,7 @@ export class SingleOrder extends Component {
     let deliveryDate = state.deliveryDate ? state.deliveryDate : order.deliveryDate
     const orderToUpdate = Object.assign({}, {placed, timePlaced, shippedDate, deliveryDate});
 
-    axios.put(`/api/orders/${editId}`, orderToUpdate)
+    axios.put(`/api/users/${this.props.userId}/orders/${editId}`, orderToUpdate)
     .then(res => res.data)
     .then(updatedOrder => {
       console.log(`Updated: ${updatedOrder}`);
@@ -53,7 +53,7 @@ export class SingleOrder extends Component {
   }
   handleDelete(e) {
     const deleteId = this.props.match.params.orderId;
-    axios.delete(`/api/orders/${deleteId}`)
+    axios.delete(`/api/users/${this.props.userId}/orders/${deleteId}`)
     .then(res => res.data)
     .then( () => this.props.history.goBack())
   }
@@ -174,10 +174,10 @@ export class SingleOrder extends Component {
  * CONTAINER
 */
 const mapState = state => {
-  return { singleOrder: state.orders.singleOrder }
+  return { singleOrder: state.orders.singleOrder, userId: state.user.id }
 }
 
-const mapDispatch = dispatch => ({ loadOrder: (ID) => dispatch(fetchSingleOrder(ID)) })
+const mapDispatch = dispatch => ({ loadOrder: (ID, userId) => dispatch(fetchSingleOrder(ID, userId)) })
 
 export default connect(mapState, mapDispatch)(SingleOrder)
 //export default connect(mapState)(SingleOrder)

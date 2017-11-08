@@ -3,7 +3,13 @@ const User = require('../db/models/user')
 module.exports = router
 
 router.post('/login', (req, res, next) => {
-  User.findOne({where: {email: req.body.email}})
+  User.findOne({
+    where: {email: req.body.email},
+    include: [{
+      all: true,
+      nested: true
+    }]
+  })
     .then(user => {
       console.log('req.body', req.body)
       if (!user) {
