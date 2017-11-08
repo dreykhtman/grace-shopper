@@ -52,7 +52,7 @@ export class AccountPage extends Component {
                                             )
                                         })
                                     }
-                                    <h4>Subtotal: {pastOrder.subtotal}</h4>
+                                    <h4>Subtotal: ${pastOrder.subtotal}</h4>
                                     {
                                         pastOrder.deliveryDate
                                         ? <div>

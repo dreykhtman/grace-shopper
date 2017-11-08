@@ -113,6 +113,7 @@ export class Cart extends Component {
                 <div key={product.name}>
                   <li >
                     <span>Product Name: {product.name}</span>
+                    <br />
                     <span>Price: {product.floatPrice}</span>
 
                     <div className="flex">
@@ -131,19 +132,22 @@ export class Cart extends Component {
               )
             })
         }
+        <br />
         <div>
-        <label>Subtotal:</label>
-        {
-          total
-        }
+        <h4>Subtotal:</h4><span>{ total }</span>
         </div>
         </ul>
 
         <div style={{marginTop: '33px'}}>
-          <form onSubmit={this.handleCheckout} onChange={this.promo}>
+          <form onSubmit={this.handleCheckout}>
             <label>Promotion Code:</label>
-            <input type="text" placeholder="Enter Code Here" />
-              <button type="submit" className="btn btn-success" >Checkout</button>
+            <input type="text" placeholder="Enter Code Here" onChange={this.promo} />
+            <label>Credit Card:</label>
+            <input type="text" placeholder="Enter Credit Card Here" />
+            <label>CVM:</label>
+            <input type="text" placeholder="Enter CVM Here" />
+            <br />
+            <button type="submit" className="btn btn-success" >Checkout</button>
           </form>
         </div>
 
