@@ -9,46 +9,6 @@
 //  *
 //  * Now that you've got the main idea, check it out in practice below!
 //  */
-// const db = require('../server/db')
-// const {User} = require('../server/db/models')
-
-// async function seed () {
-//   await db.sync({force: true})
-//   console.log('db synced!')
-//   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
-//   // executed until that promise resolves!
-
-//   const users = await Promise.all([
-//     User.create({email: 'cody@email.com', password: '123'}),
-//     User.create({email: 'murphy@email.com', password: '123'})
-//   ])
-//   // Wowzers! We can even `await` on the right-hand side of the assignment operator
-//   // and store the result that the promise resolves to in a variable! This is nice!
-//   console.log(`seeded ${users.length} users`)
-//   console.log(`seeded successfully`)
-// }
-
-// Execute the `seed` function
-// `Async` functions always return a promise, so we can use `catch` to handle any errors
-// that might occur inside of `seed`
-// seed()
-//   .catch(err => {
-//     console.error(err.message)
-//     console.error(err.stack)
-//     process.exitCode = 1
-//   })
-//   .then(() => {
-//     console.log('closing db connection')
-//     db.close()
-//     console.log('db connection closed')
-//   })
-
-// /*
-//  * note: everything outside of the async function is totally synchronous
-//  * The console.log below will occur before any of the logs that occur inside
-//  * of the async function
-//  */
-// console.log('Seeding...');
 
 
 const {User, Product, Order, Products_in_order, Review, db} = require('../server/db/models');
@@ -96,16 +56,16 @@ const orders = [
 ]
 
 const orderedProducts = [
-  {quantity: 2, orderId: 1, productId: 1},
-  {quantity: 3, orderId: 2, productId: 2},
-  {quantity: 1, orderId: 3, productId: 3},
-  {quantity: 10, orderId: 4, productId: 4},
-  {quantity: 1, orderId: 5, productId: 3},
-  {quantity: 1, orderId: 6, productId: 1},
-  {quantity: 1, orderId: 6, productId: 2},
-  {quantity: 3, orderId: 6, productId: 4},
-  {quantity: 1, orderId: 7, productId: 3},
-  {quantity: 5, orderId: 7, productId: 4}
+  {quantity: 2, purchasePrice: 199.99 * 2, orderId: 1, productId: 1},
+  {quantity: 3, purchasePrice: (99.99 * 3).toFixed(2), orderId: 2, productId: 2},
+  {quantity: 1, purchasePrice: 999.99, orderId: 3, productId: 3},
+  {quantity: 10, purchasePrice: 29.99 * 10, orderId: 4, productId: 4},
+  {quantity: 1, purchasePrice: 999.99, orderId: 5, productId: 3},
+  {quantity: 1, purchasePrice: null, orderId: 6, productId: 1},
+  {quantity: 1, purchasePrice: null, orderId: 6, productId: 2},
+  {quantity: 3, purchasePrice: null, orderId: 6, productId: 4},
+  {quantity: 1, purchasePrice: null, orderId: 7, productId: 3},
+  {quantity: 5, purchasePrice: null, orderId: 7, productId: 4}
 ]
 
 const reviews = [

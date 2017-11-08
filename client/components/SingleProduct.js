@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { addToCart, fetchOrder } from '../store/cart';
-import store from '../store';
 
 export class SingleProduct extends Component {
   constructor() {
@@ -42,16 +40,17 @@ export class SingleProduct extends Component {
 
   handleClick(event) {
     event.preventDefault();
+    let userId = this.props.user;
 
-    const id = this.props.match.params.id;
-    axios.post(`/api/products/${id}/cart`, {
+    const productId = this.props.match.params.id;
+    axios.post(`/api/products/${productId}/cart`, {
       quantity: this.state.quantity,
       price: this.state.product.price,
       productId: this.state.product.id,
       userId: this.setId()
     })
-      .then(res => res.data)
-      .then(() => { window.location.href = `/users/${this.props.user}/cart`; })
+    .then(res => res.data)
+    .then(() => { window.location.href = `/users/${userId}/cart`; })
   }
 
   render() {

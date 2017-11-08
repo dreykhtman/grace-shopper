@@ -15,20 +15,8 @@ router.get('/orders', (req, res, next) => {
         res.json(orders)
       })
       .catch(next);
-    //res.json('permission denied!')
   }
 });
-
-// router.route('/:id/orders/:orderId/cart')
-// .get((req, res, next) => {
-//   Order.findById(+req.params.orderId, {
-//     where: {
-//       placed: false
-//     }
-//   })
-//     .then(order => res.json(order))
-//     .catch(next)
-// })
 
 router.param('orderId', (req, res, next, id) => {
   Order.findById(id, {
@@ -58,20 +46,23 @@ router.route('/:userId/orders/:orderId')
     .then(rip => console.log('RIP:', rip))
 })
 
+
 router.route('/:userId/cart')
 .get((req, res, next) => {
   User.findById(+req.params.userId, {
-    where: {
-      placed: false
-    },
     include: [{
       all: true,
       nested: true
     }],
     exclude: ['cc', 'password', 'salt', 'googleId']
   })
-    .then(foundUser => res.json(foundUser))
-    .catch(next)
+  .then(foundUser => foundUser.orders)
+  .then(orders => {
+    let unfulfilled = orders.filter(order => !order.placed)
+    if (unfulfilled.length) res.json(unfulfilled[0]);
+    else res.json('Please place an order.')
+  })
+  .catch(next)
 })
 
 router.get('/:userId/orders', (req, res, next) => {
@@ -89,13 +80,13 @@ router.get('/:userId/orders', (req, res, next) => {
 router.get('/:userId', (req, res, next) => {
   // admin validation is temporarily disabled for testing
 
-  // if (req.user && (req.user.id === +req.params.userId || req.user.isAdmin)) {
-  User.findById(+req.params.userId, {
-    attributes: {
-      include: ['id', 'email', 'name', 'address'],
-      exclude: ['password', 'salt', 'googleId']
-    }
-  })
+  if (req.user && (req.user.id === +req.params.userId || req.user.isAdmin)) {
+    User.findById(+req.params.userId, {
+      attributes: {
+        include: ['id', 'email', 'name', 'address'],
+        exclude: ['password', 'salt', 'googleId']
+      }
+    })
     .then(user => {
       if (user) {
         res.json(user)
@@ -104,11 +95,10 @@ router.get('/:userId', (req, res, next) => {
       }
     })
     .catch(next);
-  // } else {
-  //   res.status(403).json('Access denied!')
-  // }
+  } else {
+    res.status(403).json('Access denied!')
+  }
 });
-
 router.put('/:userId', (req, res, next) => {
   if (req.user && (req.user.id === +req.params.userId || req.user.isAdmin)) {
     User.findById(+req.params.userId)
@@ -119,7 +109,6 @@ router.put('/:userId', (req, res, next) => {
     res.status(403).json('Access denied!')
   }
 });
-
 router.delete('/:userId', (req, res, next) => {
   if (req.user && (req.user.id === +req.params.userId || req.user.isAdmin)) {
     User.destroy({ where: { id: +req.params.userId } })
@@ -147,7 +136,6 @@ router.get('/', (req, res, next) => {
     res.status(403).json('Access denied!')
   }
 });
-
 router.post('/', (req, res, next) => {
   User.create(req.body)
     .then(user => res.status(201).json(user))
