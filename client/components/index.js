@@ -22,3 +22,4 @@ export {default as SearchProducts} from './SearchProducts';
 export {SingleProductCard} from './SingleProductCard';
 export {FilteredProducts} from './FilteredProducts';
 export {default as AccountPage} from './AccountPage';
+export {OrderConfirmation} from './OrderConfirmation';
